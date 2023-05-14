@@ -102,7 +102,7 @@ if(clicked===1){
 
 function display(){
   let length = ListOfItems.length;
-  alert(length);
+  // alert(length);
 
 
 
@@ -111,10 +111,11 @@ function display(){
     card.classList.add("card");
     card.classList.add("text-left");
     card.classList.add("itemCards");
+    card.classList.add("slide-in-bottom");
     // card.addEventListener("click",AddToCart);
     card.addEventListener("click", function() {
       // Call the AddToCart function with the parameters
-      AddToCart(ListOfItems[i].itemName, ListOfItems[i].ItemPrice, ListOfItems[i].ImgUrl);
+      AddToCart(ListOfItems[i].itemName, ListOfItems[i].ItemPrice, ListOfItems[i].ImgUrl, ListOfItems[i].ItemCode);
     });
 
     let cardBody = document.createElement("div");
@@ -165,9 +166,42 @@ function display(){
 }
 
 let CartItemNumber = 0;
+let buyArray = [];
+let totalPrice = 0;
 
-function AddToCart(name,price,url){
+function AddToCart(name,price,url,code){
   // alert(name+" "+price+" "+url);
+
+  let existingItem = buyArray.find(item => item.itemName === name);
+  if (existingItem) {
+    // Item already exists in cart, update price and quantity
+    existingItem.ItemPrice += parseFloat(price);
+    existingItem.itemQuantity +=  1 ;
+
+    totalPrice = totalPrice+parseFloat(price);
+    document.getElementById("totalPrice").value = totalPrice+"-/Rp";
+
+    const card = document.getElementById(`card-${existingItem.itemId}`);
+    incrementCardQuantity(card);
+
+    return false;
+  }
+
+  let add={
+    itemId: CartItemNumber,
+    itemName:name,
+    ItemPrice:parseFloat(price),
+    ItemCode:code,
+    itemQuantity:1,
+  }
+
+  buyArray.push(add);
+
+  totalPrice = totalPrice+parseFloat(price);
+
+  document.getElementById("totalPrice").value = totalPrice+"-/Rp";
+
+
   let card = document.createElement("div");
   // card text-left BuyItemCards
   card.classList.add("card");
@@ -239,7 +273,15 @@ function AddToCart(name,price,url){
 
   let input_group_prepend = document.createElement("div");
   input_group_prepend.classList.add("input-group-prepend");
+  input_group_prepend.setAttribute("id", CartItemNumber);
+
+  input_group_prepend.addEventListener("click", function() {
+    // Call the AddToCart function with the parameters
+    Minus(this.id);
+  });
   input_group.appendChild(input_group_prepend);
+
+
 
   let input_group_text = document.createElement("span");
   input_group_text.classList.add("input-group-text");
@@ -255,6 +297,11 @@ function AddToCart(name,price,url){
 
   let input_group_append= document.createElement("div");
   input_group_append.classList.add("input-group-append");
+  input_group_append.setAttribute("id", CartItemNumber);
+  input_group_append.addEventListener("click", function() {
+    // Call the AddToCart function with the parameters
+    Plus(this.id);
+  });
   input_group.appendChild(input_group_append);
 
   let input_group_text2 = document.createElement("span");
@@ -274,10 +321,185 @@ function AddToCart(name,price,url){
   ++CartItemNumber;
 }
 
+
+
+
 function remove(cardID){
-  alert(cardID);
+  // alert(cardID);
+
   let card = document.getElementById(cardID);
-  console.log(card);
-  let container = document.getElementById("buyBoxes");
-  container.removeChild(card);
+    console.log(card);
+
+  card.classList.add("slide-in-right");
+  card.classList.add("slide-out-right");
+
+
+  setTimeout(() => {
+    let card = document.getElementById(cardID);
+    console.log(card);
+    let container = document.getElementById("buyBoxes");
+    container.removeChild(card);
+
+  }, 700);
+
+}
+
+
+function Minus(id){
+  // id="input-1"
+  // alert(id);
+
+  let existingItem = buyArray.find(item => item.itemId === id);
+  if (existingItem) {
+    // Item already exists in cart, update price and quantity
+    existingItem.ItemPrice -= (existingItem.ItemPrice/existingItem.itemQuantity);
+    existingItem.itemQuantity -=  1 ;
+
+    totalPrice = totalPrice+parseFloat(price);
+    document.getElementById("totalPrice").value = totalPrice+"-/Rp";
+
+    const card = document.getElementById(`card-${existingItem.itemId}`);
+    decrementCardQuantity(card);
+
+  }
+
+ let min = document.getElementById("input_" +id).value; 
+ if (min==1||min<=0){
+  let removeConfirm = confirm("This will remove item from cart");
+  // console.warn(removeConfirm);
+  if(removeConfirm){
+    remove("card-" + id);
+  }
+ }
+ else{
+  --document.getElementById("input_" +id).value
+ }
+
+//  alert(min);
+
+}
+
+function Plus(PlusID){
+  // alert("Plus wala Funtion"+PlusI=D);
+  ++document.getElementById("input_"+PlusID).value;
+}
+
+function incrementCardQuantity(card) {
+  const inputElement = card.querySelector('input');
+  const currentValue = parseInt(inputElement.value);
+  inputElement.value = currentValue + 1;
+}
+
+function decrementCardQuantity(card) {
+  const inputElement = card.querySelector('input');
+  const currentValue = parseInt(inputElement.value);
+  inputElement.value = currentValue - 1;
+}
+
+
+function search(value){
+  // if(isNaN(value)){
+  //   document.getElementById("ItemsDisplay").classList.remove("d-none");
+  //   document.getElementById("ItemsDisplayForSearch").classList.add("d-none");
+  // }
+  // else{
+  //   document.getElementById("ItemsDisplay").classList.add("d-none");
+  //   document.getElementById("ItemsDisplayForSearch").classList.remove("d-none");
+
+
+
+
+  //   // for (let i = 0; i < ListOfItems.length; i++) {
+
+      
+
+  //   //   let card = document.createElement("div");
+  //   //   card.classList.add("card");
+  //   //   card.classList.add("text-left");
+  //   //   card.classList.add("itemCards");
+  //   //   card.classList.add("slide-in-bottom");
+  //   //   // card.addEventListener("click",AddToCart);
+  //   //   card.addEventListener("click", function() {
+  //   //     // Call the AddToCart function with the parameters
+  //   //     AddToCart(ListOfItems[i].itemName, ListOfItems[i].ItemPrice, ListOfItems[i].ImgUrl);
+  //   //   });
+  
+  //   //   let cardBody = document.createElement("div");
+  //   //   cardBody.classList.add("card-body");
+  //   //   cardBody.classList.add("pt-1");
+  //   //   cardBody.classList.add("pb-0");
+  
+  //   //   let row = document.createElement("div");
+  //   //   row.classList.add("row");
+  //   //   cardBody.appendChild(row);
+      
+  //   //   let col5 = document.createElement("div");
+  //   //   col5.classList.add("col-md-5");
+  //   //   col5.classList.add("p-0");
+  //   //   col5.classList.add("m-0");
+  //   //   row.appendChild(col5);
+  
+  
+  //   //   let img = document.createElement("img");
+  //   //   img.classList.add("roundedItem");
+  //   //   img.src=ListOfItems[i].ImgUrl;
+  //   //   col5.appendChild(img);
+  
+  
+  
+  //   //   let col7 = document.createElement("div");
+  //   //   col7.classList.add("col-md-7");
+  //   //   row.appendChild(col7);
+  
+  //   //   let h4 = document.createElement("h4");
+  //   //   h4.classList.add("card-title");
+  //   //   h4.textContent=ListOfItems[i].itemName;
+  //   //   col7.appendChild(h4);
+  
+  
+  //   //   let p = document.createElement("p");
+  //   //   p.classList.add("card-text");
+  //   //   p.textContent=ListOfItems[i].ItemPrice+"-/Rs";
+  //   //   col7.appendChild(p);
+  
+  //   //   card.appendChild(cardBody);
+  
+  
+  
+  //   //   let container = document.getElementById("ItemsDisplayForSearch");
+  //   //   container.appendChild(card);
+
+
+
+  //   // }
+
+
+  // }
+
+  let length = ListOfItems.length;
+  // alert(length);
+
+  let searchTerm = value.toLowerCase()
+
+  let container = document.getElementById("ItemsDisplay");
+
+// Get all the cards in the container
+let cards = container.querySelectorAll(".card");
+
+// Loop through all the cards and show/hide them based on whether their item name contains the search term
+for (let i = 0; i < cards.length; i++) {
+  let itemName = cards[i].querySelector(".card-title").textContent.toLowerCase();
+  if (itemName.indexOf(searchTerm) === -1) {
+    cards[i].style.display = "none";
+  } else {
+    cards[i].style.display = "block";
+  }
+}
+
+
+
+}
+
+function sellConfirm(){
+  console.log(buyArray);
 }

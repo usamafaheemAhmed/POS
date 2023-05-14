@@ -584,6 +584,65 @@ input:invalid:focus{
     opacity: 1;
   }
 }
+.slide-out-right {
+	-webkit-animation: slide-out-right 0.9s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+	        animation: slide-out-right 0.9s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+}
+
+ @-webkit-keyframes slide-out-right {
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateX(1000px);
+            transform: translateX(1000px);
+    opacity: 0;
+  }
+}
+@keyframes slide-out-right {
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateX(1000px);
+            transform: translateX(1000px);
+    opacity: 0;
+  }
+}
+
+.slide-in-bottom {
+	-webkit-animation: slide-in-bottom 0.9s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: slide-in-bottom 0.9s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+ @-webkit-keyframes slide-in-bottom {
+  0% {
+    -webkit-transform: translateY(100px);
+            transform: translateY(100px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes slide-in-bottom {
+  0% {
+    -webkit-transform: translateY(100px);
+            transform: translateY(100px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    opacity: 1;
+  }
+}
 
 
     .boxes{
@@ -677,4 +736,46 @@ input:invalid:focus{
       border-bottom: 2px solid #E65C4F;
       color:#E65C4F;
       font-weight: 700;
+    }
+    .searchBox{
+      display: flex;
+      /* flex-wrap: wrap; */
+      align-items: center;
+      justify-content: center;
+      
+    }
+
+    .circle{
+      border-radius: 25px 25px 25px 25px;
+      background-color: #f0fdf3;
+      width: 300px;
+      height: 50px;
+      padding: 6px 6px 0px 6px;
+    }
+    /* .fa-magnifying-glass{
+      font-size: 30px;
+    } */
+
+    .search{
+      border: none !important;
+      border-radius: 25px 0px 0px 25px;
+      background-color: transparent;
+    }
+    .search:is(:focus ,:active){
+      background-color: transparent;
+    }
+    .search-append{
+      border: none !important;
+    }
+
+    .total{
+      border: none !important;
+      margin-top: 10px;
+      font-size: 30px;
+    }
+    .total-sell{
+      border: none !important;
+      font-size: 30px ;
+      font-weight: 600;
+      padding-top: 14px;
     }

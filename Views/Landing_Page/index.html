@@ -65,13 +65,21 @@
   
         <div id="main" class="container-fluid m-0 pr-0">
             <div class="row">
-                <div class="col-md-12">
-                    
-                </div>
-
                 <div class="col-md-8 " >
+                    <div class="col-md-12 m-3 text-center">
+                      <div class="searchBox" >
+                      <div class="circle">
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control search" id="search" onchange="search(this.value)" placeholder="Search by Name or Code" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                          <div class="input-group-append ">
+                            <span class="input-group-text search-append" id="basic-addon2"><i class="fa-lg fa-solid fa-magnifying-glass"></i></span>
+                          </div>
+                        </div>
+                         </div>
+                      </div>
+                    </div>
                     <div class="boxes" id="ItemsDisplay" >
-                       <div class="card text-left itemCards" onclick="AddToCart(1)">
+                       <div class="card text-left itemCards slide-in-bottom" onclick="AddToCart(1)">
                             <div class="card-body pt-1 pb-0">
                               <div class="row ">
                                 <div class="col-md-5 p-0 m-0">
@@ -86,7 +94,7 @@
                               </div>
                             </div>
                           </div> 
-                          <div class="card text-left itemCards">
+                          <div class="card text-left itemCards slide-in-bottom">
                             <div class="card-body pt-1 pb-0">
                               <div class="row ">
                                 <div class="col-md-5 p-0 m-0">
@@ -101,7 +109,7 @@
                               </div>
                             </div>
                           </div> 
-                          <div class="card text-left itemCards">
+                          <div class="card text-left itemCards slide-in-bottom">
                             <div class="card-body pt-1 pb-0">
                               <div class="row ">
                                 <div class="col-md-5 p-0 m-0">
@@ -118,29 +126,19 @@
                           </div> 
                           
                     </div>
+
                 </div>
                 <div class="col-md-4  b-0 m-0">
                     <div class="responsive buyBoxes" id="buyBoxes">
 
-                      <div class="card text-left BuyItemCards slide-in-right">
+                      <div class="card text-left">
                         <div class="card-body pt-1 pb-0">
                           <div class="row">
-                            <div class="col-md-2 p-0 m-0">
-                              <img class="roundedbuy" src="../Item_Images/spagity.jpg" alt="spagity" >
-                            </div>
-                            <div class="col-md-5">
-                                <h4 class="card-title">Spaghetti</h4>
-                                <p class="card-text">200/Rs</p>
-                            </div>
-                            <div class="col-md-5">
-                              <i class="fa-solid fa-xmark float-right my-1"></i>
-                              <div class="input-group">
-                                <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="fa-sm fa-solid fa-minus slide-bck-left"></i></span>
-                                </div>
-                                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" value="1">
-                                <div class="input-group-append">
-                                  <span class="input-group-text"><i class="fa-sm fa-solid fa-plus slide-bck-left"></i></span>
+                            <div class="col-md-12">
+                              <div class="input-group mb-3">
+                                <input type="text" class="form-control total" id="totalPrice"  placeholder="Total amount" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <div class="input-group-append ">
+                                  <span class="input-group-text total-sell" id="basic-addon2" onclick="sellConfirm()"> Sell </span>
                                 </div>
                               </div>
                             </div>
@@ -148,31 +146,7 @@
                         </div>
                       </div> 
                       
-                      <div class="card text-left BuyItemCards slide-in-right">
-                        <div class="card-body pt-1 pb-0">
-                          <div class="row">
-                            <div class="col-md-2 p-0 m-0">
-                              <img class="roundedbuy" src="../Item_Images/spagity.jpg" alt="spagity" >
-                            </div>
-                            <div class="col-md-5">
-                                <h4 class="card-title">Spaghetti</h4>
-                                <p class="card-text">200/Rs</p>
-                            </div>
-                            <div class="col-md-5">
-                              <i class="fa-solid fa-xmark float-right my-1"></i>
-                              <div class="input-group">
-                                <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="fa-sm fa-solid fa-minus slide-bck-left"></i></span>
-                                </div>
-                                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" value="1">
-                                <div class="input-group-append">
-                                  <span class="input-group-text"><i class="fa-sm fa-solid fa-plus slide-bck-left"></i></span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div> 
+         
                       
                     </div>
                 </div>
