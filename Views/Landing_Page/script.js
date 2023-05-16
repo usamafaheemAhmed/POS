@@ -324,24 +324,36 @@ function AddToCart(name,price,url,code){
 
 
 
-function remove(cardID){
-  // alert(cardID);
+function remove(cardID) {
+  // Extract the itemId from the cardID
+  let itemId = parseInt(cardID.split("-")[1]);
 
-  let card = document.getElementById(cardID);
-    console.log(card);
+  // Find the index of the item with the matching itemId
+  let index = buyArray.findIndex(item => item.itemId === itemId);
 
-  card.classList.add("slide-in-right");
-  card.classList.add("slide-out-right");
+  if (index !== -1) {
+    // Remove the item from the buyArray
+    let removedItem = buyArray.splice(index, 1)[0];
 
+    // Update the total price
+    totalPrice -= parseFloat(removedItem.ItemPrice);
 
-  setTimeout(() => {
+    // Update the total price element
+    document.getElementById("totalPrice").value = totalPrice + "-/Rp";
+
+    // Remove the card from the DOM
     let card = document.getElementById(cardID);
-    console.log(card);
-    let container = document.getElementById("buyBoxes");
-    container.removeChild(card);
+    card.classList.add("slide-in-right");
+    card.classList.add("slide-out-right");
 
-  }, 700);
+    setTimeout(() => {
+      let container = document.getElementById("buyBoxes");
+      container.removeChild(card);
+    }, 700);
 
+    // Update the CartItemNumber
+    --CartItemNumber;
+  }
 }
 
 
@@ -398,83 +410,6 @@ function decrementCardQuantity(card) {
 
 
 function search(value){
-  // if(isNaN(value)){
-  //   document.getElementById("ItemsDisplay").classList.remove("d-none");
-  //   document.getElementById("ItemsDisplayForSearch").classList.add("d-none");
-  // }
-  // else{
-  //   document.getElementById("ItemsDisplay").classList.add("d-none");
-  //   document.getElementById("ItemsDisplayForSearch").classList.remove("d-none");
-
-
-
-
-  //   // for (let i = 0; i < ListOfItems.length; i++) {
-
-      
-
-  //   //   let card = document.createElement("div");
-  //   //   card.classList.add("card");
-  //   //   card.classList.add("text-left");
-  //   //   card.classList.add("itemCards");
-  //   //   card.classList.add("slide-in-bottom");
-  //   //   // card.addEventListener("click",AddToCart);
-  //   //   card.addEventListener("click", function() {
-  //   //     // Call the AddToCart function with the parameters
-  //   //     AddToCart(ListOfItems[i].itemName, ListOfItems[i].ItemPrice, ListOfItems[i].ImgUrl);
-  //   //   });
-  
-  //   //   let cardBody = document.createElement("div");
-  //   //   cardBody.classList.add("card-body");
-  //   //   cardBody.classList.add("pt-1");
-  //   //   cardBody.classList.add("pb-0");
-  
-  //   //   let row = document.createElement("div");
-  //   //   row.classList.add("row");
-  //   //   cardBody.appendChild(row);
-      
-  //   //   let col5 = document.createElement("div");
-  //   //   col5.classList.add("col-md-5");
-  //   //   col5.classList.add("p-0");
-  //   //   col5.classList.add("m-0");
-  //   //   row.appendChild(col5);
-  
-  
-  //   //   let img = document.createElement("img");
-  //   //   img.classList.add("roundedItem");
-  //   //   img.src=ListOfItems[i].ImgUrl;
-  //   //   col5.appendChild(img);
-  
-  
-  
-  //   //   let col7 = document.createElement("div");
-  //   //   col7.classList.add("col-md-7");
-  //   //   row.appendChild(col7);
-  
-  //   //   let h4 = document.createElement("h4");
-  //   //   h4.classList.add("card-title");
-  //   //   h4.textContent=ListOfItems[i].itemName;
-  //   //   col7.appendChild(h4);
-  
-  
-  //   //   let p = document.createElement("p");
-  //   //   p.classList.add("card-text");
-  //   //   p.textContent=ListOfItems[i].ItemPrice+"-/Rs";
-  //   //   col7.appendChild(p);
-  
-  //   //   card.appendChild(cardBody);
-  
-  
-  
-  //   //   let container = document.getElementById("ItemsDisplayForSearch");
-  //   //   container.appendChild(card);
-
-
-
-  //   // }
-
-
-  // }
 
   let length = ListOfItems.length;
   // alert(length);
@@ -502,4 +437,101 @@ for (let i = 0; i < cards.length; i++) {
 
 function sellConfirm(){
   console.log(buyArray);
+ 
+    let OrderId = generateOrderID() ;
+
+    document.getElementById("OrderId").innerHTML=OrderId;
+    const currentDate = new Date();
+    const date = currentDate.getDate();
+    const day = currentDate.toLocaleString('en-US', { weekday: 'short' }).toUpperCase();
+    // alert(day);
+    const month = currentDate.getMonth() + 1; // Months are zero-based
+    const year = currentDate.getFullYear();
+    const min = currentDate.getMinutes();
+    const hours = currentDate.getHours();
+    document.getElementById("Date").innerHTML= day+" "+date+"/"+month+"/"+year+" "+hours+":"+min;
+
+
+    // Assuming you have a table with id "salesTable"
+const salesTable = document.getElementById("ReceiptTable");
+
+// Remove all existing rows from the table
+while (salesTable.rows.length > 0) {
+  salesTable.deleteRow(0);
+}
+
+let GrandTotal=0;
+// Loop through the buyArray and add rows to the table
+for (let i = 0; i < buyArray.length; i++) {
+  const item = buyArray[i];
+
+  // Create a new row
+  const newRow = salesTable.insertRow();
+
+  // Insert cells into the row
+  const itemNameCell = newRow.insertCell();
+  // const itemCodeCell = newRow.insertCell();
+  const unitPriceCell = newRow.insertCell();
+  const quantityCell = newRow.insertCell();
+  const totalBillCell = newRow.insertCell();
+
+  // Set the cell values based on the item data
+  itemNameCell.textContent = item.itemName;
+  unitPriceCell.textContent = item.ItemPrice/item.itemQuantity;// need work
+  quantityCell.textContent = item.itemQuantity;
+  totalBillCell.textContent = item.ItemPrice;
+
+  GrandTotal += item.ItemPrice;
+
+}
+
+document.getElementById("OrderTotal").innerHTML=GrandTotal;
+
+printDiv();
+  // let add={
+  //   itemId: CartItemNumber,
+  //   itemName:name,
+  //   ItemPrice:parseFloat(price),
+  //   ItemCode:code,
+  //   itemQuantity:1,
+  // }
+
+
+
+}
+
+const generateOrderID = () => {
+  // const ItemCode = ItemCode;
+  const currentDate = new Date();
+  const date = currentDate.getDate();
+  const day = currentDate.toLocaleString('en-US', { weekday: 'short' }).toUpperCase();
+  // alert(day);
+  // const month = currentDate.getMonth() + 1; // Months are zero-based
+  // const year = currentDate.getFullYear();
+  const seconds = currentDate.getSeconds();
+  const hours = currentDate.getHours();
+
+  return day + date + hours + seconds;
+};
+
+function printDiv() {
+  const printDiv = document.getElementById("Print");
+
+  // Hide unwanted content on the page
+  const elementsToHide = document.querySelectorAll("body > :not(#Print)");
+  elementsToHide.forEach((element) => {
+    element.style.display = "none";
+  });
+
+  // Print the desired div
+  printDiv.style.display = "block";
+
+  // Print the page
+  window.print();
+
+  // Restore the original display styles
+  elementsToHide.forEach((element) => {
+    element.style.display = "";
+  });
+  printDiv.style.display = "";
 }

@@ -779,3 +779,14 @@ input:invalid:focus{
       font-weight: 600;
       padding-top: 14px;
     }
+    .Print{
+      font-weight: 600;
+      /* margin: 0px 0px 0px 500px; */
+      text-align: center;
+
+      display: none;
+
+    }
+    .Print h5:last-child{
+      float: right;
+    }
