@@ -9,6 +9,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     array_push($menu_items, $row);
 }
 
+
 if (count($menu_items) > 0) {
     $data = json_encode($menu_items);
     echo $data;

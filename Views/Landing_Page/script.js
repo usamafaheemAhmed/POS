@@ -441,6 +441,7 @@ function sellConfirm(){
     let OrderId = generateOrderID() ;
 
     document.getElementById("OrderId").innerHTML=OrderId;
+    document.getElementById("OrderId2").innerHTML=OrderId;
     const currentDate = new Date();
     const date = currentDate.getDate();
     const day = currentDate.toLocaleString('en-US', { weekday: 'short' }).toUpperCase();
@@ -450,14 +451,17 @@ function sellConfirm(){
     const min = currentDate.getMinutes();
     const hours = currentDate.getHours();
     document.getElementById("Date").innerHTML= day+" "+date+"/"+month+"/"+year+" "+hours+":"+min;
+    document.getElementById("Date2").innerHTML= day+" "+date+"/"+month+"/"+year+" "+hours+":"+min;
 
 
     // Assuming you have a table with id "salesTable"
 const salesTable = document.getElementById("ReceiptTable");
+const salesTable2 = document.getElementById("ReceiptTable2");
 
 // Remove all existing rows from the table
 while (salesTable.rows.length > 0) {
   salesTable.deleteRow(0);
+  salesTable2.deleteRow(0);
 }
 
 let GrandTotal=0;
@@ -467,13 +471,18 @@ for (let i = 0; i < buyArray.length; i++) {
 
   // Create a new row
   const newRow = salesTable.insertRow();
+  const newRow2 = salesTable2.insertRow();
 
   // Insert cells into the row
   const itemNameCell = newRow.insertCell();
-  // const itemCodeCell = newRow.insertCell();
   const unitPriceCell = newRow.insertCell();
   const quantityCell = newRow.insertCell();
   const totalBillCell = newRow.insertCell();
+
+  const itemNameCell2 = newRow2.insertCell();
+  const unitPriceCell2 = newRow2.insertCell();
+  const quantityCell2 = newRow2.insertCell();
+  const totalBillCell2 = newRow2.insertCell();
 
   // Set the cell values based on the item data
   itemNameCell.textContent = item.itemName;
@@ -481,23 +490,22 @@ for (let i = 0; i < buyArray.length; i++) {
   quantityCell.textContent = item.itemQuantity;
   totalBillCell.textContent = item.ItemPrice;
 
+  itemNameCell2.textContent = item.itemName;
+  unitPriceCell2.textContent = item.ItemPrice/item.itemQuantity;// need work
+  quantityCell2.textContent = item.itemQuantity;
+  totalBillCell2.textContent = item.ItemPrice;
+
   GrandTotal += item.ItemPrice;
 
 }
 
 document.getElementById("OrderTotal").innerHTML=GrandTotal;
+document.getElementById("OrderTotal2").innerHTML=GrandTotal;
 
-printDiv();
-  // let add={
-  //   itemId: CartItemNumber,
-  //   itemName:name,
-  //   ItemPrice:parseFloat(price),
-  //   ItemCode:code,
-  //   itemQuantity:1,
-  // }
+// printDiv();
 
-
-
+  // Print the desired div
+  $("[data-toggle = modal]").trigger({ type: "click" });
 }
 
 const generateOrderID = () => {
@@ -514,6 +522,34 @@ const generateOrderID = () => {
   return day + date + hours + seconds;
 };
 
+function Confirm(){
+  $("[data-toggle = modal]").trigger({ type: "click" });
+
+
+
+
+
+
+
+  $.ajax({
+    url: "../../PHP/SendSales.php",
+    method:"POST",
+    data: {buyArray: buyArray},
+    success: function (res) {
+      alert("Ok saved \n"+res);
+    }
+  
+  
+  });
+
+
+
+
+  printDiv();
+
+}
+
+
 function printDiv() {
   const printDiv = document.getElementById("Print");
 
@@ -529,9 +565,21 @@ function printDiv() {
   // Print the page
   window.print();
 
+
   // Restore the original display styles
   elementsToHide.forEach((element) => {
     element.style.display = "";
   });
   printDiv.style.display = "";
+
+  buyArray = [];
+  
+  // Remove all cards from the buyBoxes container except for the first card
+  const buyBoxes = document.getElementById("buyBoxes");
+  const cards = buyBoxes.getElementsByClassName("card");
+  while (cards.length > 1) {
+    buyBoxes.removeChild(cards[1]);
+  }
+  totalPrice = 0;
+  document.getElementById("totalPrice").value = totalPrice+"-/Rp";
 }

@@ -786,7 +786,24 @@ input:invalid:focus{
 
       display: none;
 
+      /* width: %; */
+
     }
     .Print h5:last-child{
       float: right;
+    }
+
+    .Print2{
+      font-weight: 600;
+      /* margin: 0px 0px 0px 500px; */
+      text-align: center;
+    }    
+    .Print2 h5:last-child{
+      float: right;
+    }
+
+    .save{
+      border: 2px solid #E65C4F;
+      color: #E65C4F;
+      font-weight: 600;
     }

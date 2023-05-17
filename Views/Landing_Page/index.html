@@ -145,9 +145,7 @@
                           </div>
                         </div>
                       </div> 
-                      
-         
-                      
+
                     </div>
                 </div>
             </div>
@@ -156,27 +154,85 @@
       </div>
 
       <div class="Print" id="Print">
-        <div class="col-md-4">
-          <h3>Receipt</h3>
-          <h5>Order ID: <span id="OrderId"></span></h5>
-          <h5>Date :  <span id="Date"></span></h5>
-          <table class="table table-borderless">
-            <thead>
-              <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Total</th>
-              </tr>
-            </thead>
-            <tbody id="ReceiptTable">
-            </tbody>
-          </table>
-          <h5>Total: <span id="OrderTotal"></span></h5>
+        <div class="row">
+          <div class="col-md-4">
+            <h3>Receipt</h3>
+            <h5>Order ID: <span id="OrderId"></span></h5>
+            <h5>Date :  <span id="Date"></span></h5>
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Total</th>
+                </tr>
+              </thead>
+              <tbody id="ReceiptTable">
+              </tbody>
+            </table>
+            <h5>Total: <span id="OrderTotal"></span></h5>
+          </div>
+         <div class="col-md-8"></div>
         </div>
-       
-
       </div>
+
+
+      <!-- Button trigger modal -->
+      <button type="hidden" class="btn btn-primary btn-lg d-none" data-toggle="modal" data-target="#modelId">
+        Launch
+      </button>
+      
+      <!-- Modal -->
+      <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title">Receipt will Print</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <div class="modal-body">
+              <div class="container-fluid">
+                <div class="Print2">
+
+                      <h3>Receipt</h3>
+                      <h5>Order ID: <span id="OrderId2"></span></h5>
+                      <h5>Date :  <span id="Date2"></span></h5>
+                      <table class="table table-borderless">
+                        <thead>
+                          <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total</th>
+                          </tr>
+                        </thead>
+                        <tbody id="ReceiptTable2">
+                        </tbody>
+                      </table>
+                      <h5>Total: <span id="OrderTotal2"></span></h5>
+
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn save" onclick="Confirm()">Confirm</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <script>
+        $('#exampleModal').on('show.bs.modal', event => {
+          var button = $(event.relatedTarget);
+          var modal = $(this);
+          // Use above variables to manipulate the DOM
+          
+        });
+      </script>
 
     <!-- Optional JavaScript; choose one of the two! -->
 
