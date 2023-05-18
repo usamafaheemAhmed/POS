@@ -677,15 +677,6 @@ input:invalid:focus{
         flex-grow: 1;
         }
 
-      .roundedItem{
-        border-radius: 100% !important;
-        object-fit: cover;
-        width: 90px;
-        height: 90px ;
-        transition: width .5s ,height .5s;
-        border: 2px solid #E65C4F;
-    }
-
     .roundedbuy{
       border-radius: 100% !important;
       object-fit: cover;
@@ -693,14 +684,21 @@ input:invalid:focus{
       height: 60px ;
       transition: width .5s ,height .5s;
       border: 2px solid #E65C4F;
+      margin-left: 10px;
     }
 
     .card{
-      border-radius: 25px;
+      border-radius: 10px;
       padding: 5px 5px 5px 5px;
       border: 2px solid #E65C4F;
-
+      height: fit-content;
+      margin-bottom: 3%;
     }
+    .card-body{
+       padding: 30px 10px 10px 10px;
+    }
+    
+    
 
 
     h4,p{
@@ -807,3 +805,37 @@ input:invalid:focus{
       color: #E65C4F;
       font-weight: 600;
     }
+
+    .fixed {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      /* Additional styles for the fixed card */
+    }
+    
+
+    .card {
+      position: relative;
+    }
+    
+    .card-img-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 70px;
+      height: 70px;
+      position: absolute;
+      top: 0%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+     
+    }
+    
+    .card-img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #E65C4F;
+    }
+    

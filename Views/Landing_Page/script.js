@@ -100,65 +100,104 @@ if(clicked===1){
 }
 }
 
-function display(){
+// function display(){
+//   let length = ListOfItems.length;
+//   // alert(length);
+
+
+
+//   for (let i = 0; i < ListOfItems.length; i++) {
+//     let card = document.createElement("div");
+//     card.classList.add("card");
+//     card.classList.add("text-left");
+//     card.classList.add("itemCards");
+//     card.classList.add("slide-in-bottom");
+//     // card.addEventListener("click",AddToCart);
+//     card.addEventListener("click", function() {
+//       // Call the AddToCart function with the parameters
+//       AddToCart(ListOfItems[i].itemName, ListOfItems[i].ItemPrice, ListOfItems[i].ImgUrl, ListOfItems[i].ItemCode);
+//     });
+
+//     let cardBody = document.createElement("div");
+//     cardBody.classList.add("card-body");
+//     cardBody.classList.add("pt-1");
+//     cardBody.classList.add("pb-0");
+
+//     let row = document.createElement("div");
+//     row.classList.add("row");
+//     cardBody.appendChild(row);
+    
+//     let col5 = document.createElement("div");
+//     col5.classList.add("col-md-5");
+//     col5.classList.add("p-0");
+//     col5.classList.add("m-0");
+//     row.appendChild(col5);
+
+
+//     let img = document.createElement("img");
+//     img.classList.add("roundedItem");
+//     img.src=ListOfItems[i].ImgUrl;
+//     col5.appendChild(img);
+
+
+
+//     let col7 = document.createElement("div");
+//     col7.classList.add("col-md-7");
+//     row.appendChild(col7);
+
+//     let h4 = document.createElement("h4");
+//     h4.classList.add("card-title");
+//     h4.textContent=ListOfItems[i].itemName;
+//     col7.appendChild(h4);
+
+
+//     let p = document.createElement("p");
+//     p.classList.add("card-text");
+//     p.textContent=ListOfItems[i].ItemPrice+"-/Rs";
+//     col7.appendChild(p);
+
+//     card.appendChild(cardBody);
+
+
+
+//     let container = document.getElementById("ItemsDisplay");
+//     container.appendChild(card);
+//   }
+// }
+function display() {
   let length = ListOfItems.length;
-  // alert(length);
-
-
 
   for (let i = 0; i < ListOfItems.length; i++) {
     let card = document.createElement("div");
     card.classList.add("card");
-    card.classList.add("text-left");
-    card.classList.add("itemCards");
-    card.classList.add("slide-in-bottom");
-    // card.addEventListener("click",AddToCart);
-    card.addEventListener("click", function() {
-      // Call the AddToCart function with the parameters
-      AddToCart(ListOfItems[i].itemName, ListOfItems[i].ItemPrice, ListOfItems[i].ImgUrl, ListOfItems[i].ItemCode);
-    });
+
+    let imgContainer = document.createElement("div");
+    imgContainer.classList.add("card-img-container");
+    card.appendChild(imgContainer);
+
+    let img = document.createElement("img");
+    img.classList.add("card-img");
+    img.src = ListOfItems[i].ImgUrl;
+    imgContainer.appendChild(img);
 
     let cardBody = document.createElement("div");
     cardBody.classList.add("card-body");
-    cardBody.classList.add("pt-1");
-    cardBody.classList.add("pb-0");
+    card.appendChild(cardBody);
 
-    let row = document.createElement("div");
-    row.classList.add("row");
-    cardBody.appendChild(row);
-    
-    let col5 = document.createElement("div");
-    col5.classList.add("col-md-5");
-    col5.classList.add("p-0");
-    col5.classList.add("m-0");
-    row.appendChild(col5);
-
-
-    let img = document.createElement("img");
-    img.classList.add("roundedItem");
-    img.src=ListOfItems[i].ImgUrl;
-    col5.appendChild(img);
-
-
-
-    let col7 = document.createElement("div");
-    col7.classList.add("col-md-7");
-    row.appendChild(col7);
-
-    let h4 = document.createElement("h4");
-    h4.classList.add("card-title");
-    h4.textContent=ListOfItems[i].itemName;
-    col7.appendChild(h4);
-
+    let h5 = document.createElement("h5");
+    h5.classList.add("card-title");
+    h5.textContent = ListOfItems[i].itemName;
+    cardBody.appendChild(h5);
 
     let p = document.createElement("p");
     p.classList.add("card-text");
-    p.textContent=ListOfItems[i].ItemPrice+"-/Rs";
-    col7.appendChild(p);
+    p.textContent = ListOfItems[i].ItemPrice + "/Rs";
+    cardBody.appendChild(p);
 
-    card.appendChild(cardBody);
-
-
+    // Add event listener to the card
+    card.addEventListener("click", function() {
+      AddToCart(ListOfItems[i].itemName, ListOfItems[i].ItemPrice, ListOfItems[i].ImgUrl, ListOfItems[i].ItemCode);
+    });
 
     let container = document.getElementById("ItemsDisplay");
     container.appendChild(card);
@@ -361,19 +400,7 @@ function Minus(id){
   // id="input-1"
   // alert(id);
 
-  let existingItem = buyArray.find(item => item.itemId === id);
-  if (existingItem) {
-    // Item already exists in cart, update price and quantity
-    existingItem.ItemPrice -= (existingItem.ItemPrice/existingItem.itemQuantity);
-    existingItem.itemQuantity -=  1 ;
 
-    totalPrice = totalPrice+parseFloat(price);
-    document.getElementById("totalPrice").value = totalPrice+"-/Rp";
-
-    const card = document.getElementById(`card-${existingItem.itemId}`);
-    decrementCardQuantity(card);
-
-  }
 
  let min = document.getElementById("input_" +id).value; 
  if (min==1||min<=0){
@@ -384,16 +411,46 @@ function Minus(id){
   }
  }
  else{
-  --document.getElementById("input_" +id).value
+
+   let existingItem = buyArray.find(item => item.itemId === parseFloat(id));
+   if (existingItem) {
+ 
+     totalPrice = totalPrice-(parseFloat(existingItem.ItemPrice)/parseFloat(existingItem.itemQuantity));
+     document.getElementById("totalPrice").value = totalPrice+"-/Rp";
+ 
+     // Item already exists in cart, update price and quantity
+     existingItem.ItemPrice -= (parseFloat(existingItem.ItemPrice)/parseFloat(existingItem.itemQuantity));
+     existingItem.itemQuantity -=  1 ;
+ 
+ 
+     const card = document.getElementById(`card-${existingItem.itemId}`);
+     decrementCardQuantity(card);
+
+     document.getElementById("input_" + id).value = existingItem.itemQuantity;
+ 
+   }
  }
 
 //  alert(min);
 
 }
 
-function Plus(PlusID){
-  // alert("Plus wala Funtion"+PlusI=D);
-  ++document.getElementById("input_"+PlusID).value;
+function Plus(PlusID) {
+  
+  // alert(PlusID)
+  // console.log(buyArray);
+
+  let existingItem = buyArray.find(item => item.itemId === parseFloat(PlusID));
+  // console.log(existingItem);
+
+  if (existingItem) {
+    existingItem.ItemPrice += (parseFloat(existingItem.ItemPrice) / parseFloat(existingItem.itemQuantity));
+    existingItem.itemQuantity += 1;
+    totalPrice += (parseFloat(existingItem.ItemPrice) / parseFloat(existingItem.itemQuantity));
+    document.getElementById("totalPrice").value = totalPrice + "-/Rp";
+    ++document.getElementById("input_" + PlusID).value;
+  }
+
 }
 
 function incrementCardQuantity(card) {
@@ -524,11 +581,6 @@ const generateOrderID = () => {
 
 function Confirm(){
   $("[data-toggle = modal]").trigger({ type: "click" });
-
-
-
-
-
 
 
   $.ajax({
