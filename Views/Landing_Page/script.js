@@ -2,8 +2,11 @@ let ListOfItems ;
 
 var r = document.querySelector(':root');
 let height = $(window).height()+"px";
+let height2 =  $(window).height()- 100   +"px";
 r.style.setProperty('--height', height);
+r.style.setProperty('--height2', height2);
 
+// alert(height2)
 
 window.onload = () => {
     
@@ -32,177 +35,59 @@ window.onload = () => {
         }        
     });
 
-
-
-
-
 };
 
-
-
-
-let clicked =1;
 function openNav() {
-let hide = document.getElementsByName("hide");
-let icon = document.getElementsByName("icon");
-let iconLength = document.getElementsByName("icon").length;
-// console.log(iconLength);
-let length = document.getElementsByName("hide").length;
-
-// console.log(hide);
-if(clicked===1){
-    document.getElementById("mySidenav").style.width = "250px";
-    document.getElementById("main").style.paddingLeft = "250px";
-    document.body.style.backgroundColor = "#4c6677";
-    clicked=0;
-    document.getElementById("nav-icon1").classList.add('open');
-    document.getElementById("profileImage").style.width="130px";
-    document.getElementById("profileImage").style.height="130px";
-    document.getElementById("image_span").style.top="30px";
-    document.getElementById("image_span").style.left="50px";
-    document.getElementById("divider").style.marginTop="150px";
-    for(let i=0; i<length;i++){
-      hide[i].style.display="inline-flex";
-    };
-    for(let i=0; i<iconLength;i++){
-      // alert("jon");
-      icon[i].style.marginLeft="25px";
-      // icon[i].style.display="inline-flex";
-      icon[i].style.opacity="100%";
-      
-    };
-
-    setTimeout( function() { document.getElementById("name").classList.remove('d-none'); },430);
-   
-  }
-  else{
-    document.getElementById("mySidenav").style.width = "65px";
-    document.getElementById("main").style.paddingLeft= "65px";
-    document.body.style.backgroundColor = "lightskyblue";
-    clicked=1;
-    document.getElementById("nav-icon1").classList.remove('open');
-    document.getElementById("name").classList.add('d-none');
-    document.getElementById("profileImage").style.width="40px";
-    document.getElementById("profileImage").style.height="40px";
-    document.getElementById("image_span").style.top="0px";
-    document.getElementById("image_span").style.left="13px";
-    document.getElementById("divider").style.marginTop="0px";
-    for(let i=0; i<length;i++){
-      hide[i].style.display="none";
-    };
-    for(let i=0; i<iconLength;i++){
-      icon[i].style.marginLeft="0px";
-      // icon[i].style.display="none";
-      icon[i].style.opacity="0";
-
-    };
-
-}
+  document.getElementById("mySidenav").style.width = "80px";
 }
 
-// function display(){
-//   let length = ListOfItems.length;
-//   // alert(length);
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+ 
+}
 
-
-
-//   for (let i = 0; i < ListOfItems.length; i++) {
-//     let card = document.createElement("div");
-//     card.classList.add("card");
-//     card.classList.add("text-left");
-//     card.classList.add("itemCards");
-//     card.classList.add("slide-in-bottom");
-//     // card.addEventListener("click",AddToCart);
-//     card.addEventListener("click", function() {
-//       // Call the AddToCart function with the parameters
-//       AddToCart(ListOfItems[i].itemName, ListOfItems[i].ItemPrice, ListOfItems[i].ImgUrl, ListOfItems[i].ItemCode);
-//     });
-
-//     let cardBody = document.createElement("div");
-//     cardBody.classList.add("card-body");
-//     cardBody.classList.add("pt-1");
-//     cardBody.classList.add("pb-0");
-
-//     let row = document.createElement("div");
-//     row.classList.add("row");
-//     cardBody.appendChild(row);
-    
-//     let col5 = document.createElement("div");
-//     col5.classList.add("col-md-5");
-//     col5.classList.add("p-0");
-//     col5.classList.add("m-0");
-//     row.appendChild(col5);
-
-
-//     let img = document.createElement("img");
-//     img.classList.add("roundedItem");
-//     img.src=ListOfItems[i].ImgUrl;
-//     col5.appendChild(img);
-
-
-
-//     let col7 = document.createElement("div");
-//     col7.classList.add("col-md-7");
-//     row.appendChild(col7);
-
-//     let h4 = document.createElement("h4");
-//     h4.classList.add("card-title");
-//     h4.textContent=ListOfItems[i].itemName;
-//     col7.appendChild(h4);
-
-
-//     let p = document.createElement("p");
-//     p.classList.add("card-text");
-//     p.textContent=ListOfItems[i].ItemPrice+"-/Rs";
-//     col7.appendChild(p);
-
-//     card.appendChild(cardBody);
-
-
-
-//     let container = document.getElementById("ItemsDisplay");
-//     container.appendChild(card);
-//   }
-// }
 function display() {
-  let length = ListOfItems.length;
 
   for (let i = 0; i < ListOfItems.length; i++) {
-    let card = document.createElement("div");
-    card.classList.add("card");
+    // Create the card element
+    var card = document.createElement('div');
+    card.classList.add('card', 'text-left', 'itemCards');
 
-    let imgContainer = document.createElement("div");
-    imgContainer.classList.add("card-img-container");
-    card.appendChild(imgContainer);
+    // Create the card image
+    var image = document.createElement('img');
+    image.classList.add('card-img-top');
+    image.src = ListOfItems[i].ImgUrl;
+    image.alt = 'Card Image';
+    card.appendChild(image);
 
-    let img = document.createElement("img");
-    img.classList.add("card-img");
-    img.src = ListOfItems[i].ImgUrl;
-    imgContainer.appendChild(img);
+    // Create the card body
+    var cardBody = document.createElement('div');
+    cardBody.classList.add('card-body', 'text-center');
 
-    let cardBody = document.createElement("div");
-    cardBody.classList.add("card-body");
+    // Create the card title
+    var title = document.createElement('h4');
+    title.classList.add('card-title');
+    title.textContent = ListOfItems[i].itemName;
+    cardBody.appendChild(title);
+
+    // Create the card price
+    var price = document.createElement('p');
+    price.classList.add('card-text');
+    price.textContent = ListOfItems[i].ItemPrice + '-/Rs';
+    cardBody.appendChild(price);
+
     card.appendChild(cardBody);
 
-    let h5 = document.createElement("h5");
-    h5.classList.add("card-title");
-    h5.textContent = ListOfItems[i].itemName;
-    cardBody.appendChild(h5);
-
-    let p = document.createElement("p");
-    p.classList.add("card-text");
-    p.textContent = ListOfItems[i].ItemPrice + "/Rs";
-    cardBody.appendChild(p);
-
     // Add event listener to the card
-    card.addEventListener("click", function() {
+    card.addEventListener('click', function() {
       AddToCart(ListOfItems[i].itemName, ListOfItems[i].ItemPrice, ListOfItems[i].ImgUrl, ListOfItems[i].ItemCode);
     });
 
-    let container = document.getElementById("ItemsDisplay");
+    let container = document.getElementById('ItemsDisplay');
     container.appendChild(card);
   }
 }
+
 
 let CartItemNumber = 0;
 let buyArray = [];
@@ -218,7 +103,7 @@ function AddToCart(name,price,url,code){
     existingItem.itemQuantity +=  1 ;
 
     totalPrice = totalPrice+parseFloat(price);
-    document.getElementById("totalPrice").value = totalPrice+"-/Rp";
+    document.getElementById("totalPrice").innerHTML = totalPrice+"-/Rp";
 
     const card = document.getElementById(`card-${existingItem.itemId}`);
     incrementCardQuantity(card);
@@ -238,7 +123,7 @@ function AddToCart(name,price,url,code){
 
   totalPrice = totalPrice+parseFloat(price);
 
-  document.getElementById("totalPrice").value = totalPrice+"-/Rp";
+  document.getElementById("totalPrice").innerHTML = totalPrice+"-/Rp";
 
 
   let card = document.createElement("div");
@@ -378,7 +263,7 @@ function remove(cardID) {
     totalPrice -= parseFloat(removedItem.ItemPrice);
 
     // Update the total price element
-    document.getElementById("totalPrice").value = totalPrice + "-/Rp";
+    document.getElementById("totalPrice").innerHTML = totalPrice + "-/Rp";
 
     // Remove the card from the DOM
     let card = document.getElementById(cardID);
@@ -416,7 +301,7 @@ function Minus(id){
    if (existingItem) {
  
      totalPrice = totalPrice-(parseFloat(existingItem.ItemPrice)/parseFloat(existingItem.itemQuantity));
-     document.getElementById("totalPrice").value = totalPrice+"-/Rp";
+     document.getElementById("totalPrice").innerHTML = totalPrice+"-/Rp";
  
      // Item already exists in cart, update price and quantity
      existingItem.ItemPrice -= (parseFloat(existingItem.ItemPrice)/parseFloat(existingItem.itemQuantity));
@@ -447,7 +332,7 @@ function Plus(PlusID) {
     existingItem.ItemPrice += (parseFloat(existingItem.ItemPrice) / parseFloat(existingItem.itemQuantity));
     existingItem.itemQuantity += 1;
     totalPrice += (parseFloat(existingItem.ItemPrice) / parseFloat(existingItem.itemQuantity));
-    document.getElementById("totalPrice").value = totalPrice + "-/Rp";
+    document.getElementById("totalPrice").innerHTML = totalPrice + "-/Rp";
     ++document.getElementById("input_" + PlusID).value;
   }
 
@@ -581,14 +466,30 @@ const generateOrderID = () => {
 
 function Confirm(){
   $("[data-toggle = modal]").trigger({ type: "click" });
+  let orderId = document.getElementById("OrderId").innerHTML;
 
+
+
+  // alert(orderId);
+ //    let email =  sessionStorage.getItem("email");
+   let email =  "usamafaheem80@gmail.com";
+
+  let salesDB = {
+    buyArray: buyArray,
+    OrderId: orderId,
+    Email:email,
+  }
 
   $.ajax({
     url: "../../PHP/SendSales.php",
     method:"POST",
-    data: {buyArray: buyArray},
+    data: salesDB,
     success: function (res) {
-      alert("Ok saved \n"+res);
+      // alert("Ok saved \n"+res);
+      console.log(res);
+      if (res == "Successfully submitted all sales data.") {
+        alert(res);
+      }
     }
   
   
@@ -609,6 +510,7 @@ function printDiv() {
   const elementsToHide = document.querySelectorAll("body > :not(#Print)");
   elementsToHide.forEach((element) => {
     element.style.display = "none";
+    console.log(element);
   });
 
   // Print the desired div
@@ -617,21 +519,23 @@ function printDiv() {
   // Print the page
   window.print();
 
-
   // Restore the original display styles
   elementsToHide.forEach((element) => {
     element.style.display = "";
   });
   printDiv.style.display = "";
-
   buyArray = [];
   
   // Remove all cards from the buyBoxes container except for the first card
   const buyBoxes = document.getElementById("buyBoxes");
   const cards = buyBoxes.getElementsByClassName("card");
-  while (cards.length > 1) {
-    buyBoxes.removeChild(cards[1]);
+
+  while (cards.length > 0) {
+    buyBoxes.removeChild(cards[0]);
   }
+
   totalPrice = 0;
-  document.getElementById("totalPrice").value = totalPrice+"-/Rp";
+  document.getElementById("totalPrice").innerHTML = totalPrice+"-/Rp";
 }
+
+

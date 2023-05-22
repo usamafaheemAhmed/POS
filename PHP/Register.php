@@ -1,6 +1,6 @@
 <?php
 
-include("./connecte.php");
+include("./connect.php");
 
 
 $sql = "SELECT * FROM `logins`";

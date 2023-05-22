@@ -1,67 +1,46 @@
 <?php
+include("./connect.php");
 
-include("./connecte.php");
-// $BuyArray = $_POST["buyArray"];
-// $BuyLength = count($BuyArray);
+$SalesArray = $_POST["buyArray"];
+$OrderId = $_POST["OrderId"];
 
+// Get the current date and time
+$currentDate = date("Y-m-d"); // Format: DD-MM-YYYY
+$currentTime = date("H:i:s"); // Format: HH:MM:SS
 
-// for($i=0; $i<$BuyLength;$i++){
+$Email = $_POST["Email"];
 
+$loop = 0;
 
+$stmt = $conn->prepare("INSERT INTO sales (Sales_ID, OrderID, itemName, ItemCode, Quantity, date, time, ItemPrice, Email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-// $sales = $BuyArray[$i];
-
-
-// echo $sales["itemId"];
-// echo $sales["itemName"];
-// echo $sales["ItemPrice"];
-// echo $sales["itemQuantity"];
-// echo $sales["ItemCode"];
-
-
-
-// }
-
-
-// Your database connection code here
-
-$BuyArray = $_POST["buyArray"];
-$BuyLength = count($BuyArray);
-
-// Prepare the INSERT statement
-// $sql = "INSERT INTO sales (itemId, itemName, ItemPrice, itemQuantity, ItemCode) VALUES (?, ?, ?, ?, ?)";
-// $stmt = $mysqli->prepare($sql);
-
-// Bind parameters and execute the statement for each item in the buyArray
-foreach ($BuyArray as $sales) {
-//   $stmt->bind_param("ssdss", $sales["itemId"], $sales["itemName"], $sales["ItemPrice"], $sales["itemQuantity"], $sales["ItemCode"]);
-//   $stmt->execute();
-$sql = "INSERT INTO `menu` (`Sales_ID`, `itemName`, `Quantity`, `date`,  `time`,`ItemTotal`) VALUES (NULL, '{$sales["itemName"]}', '{$sales["ItemPrice"]}', '{$sales["itemName"]}', '{$sales["ItemPrice"]}');";
-$result = mysqli_query($conn, $sql);
+if (!$stmt) {
+  die("Error in preparing the statement: " . $conn->error);
 }
 
-// Check if the insertion was successful
-if ($stmt->affected_rows > 0) {
-  // Prepare the response
-  $response = array(
-    'status' => 'success',
-    'message' => 'Data stored successfully.'
-  );
+foreach ($SalesArray as $sales) {
+  $Sales_ID = '';
+  $result = $stmt->bind_param("ssssissis", $Sales_ID, $OrderId, $sales["itemName"], $sales["ItemCode"], $sales["itemQuantity"], $currentDate, $currentTime, $sales["ItemPrice"], $Email);
+
+  if (!$result) {
+    die("Error in binding the parameters: " . $stmt->error);
+  }
+
+  $result = $stmt->execute();
+
+  if (!$result) {
+    die("Error in executing the statement: " . $stmt->error);
+  }
+
+  $loop += 1;
+}
+
+if ($loop === count($SalesArray)) {
+  echo "Successfully submitted all sales data.";
 } else {
-  // Prepare the response
-  $response = array(
-    'status' => 'error',
-    'message' => 'Failed to store data.'
-  );
+  echo "Failed to submit some sales data.";
 }
 
-// Close the statement and database connection
 $stmt->close();
-$mysqli->close();
-
-// Send the response back to JavaScript
-echo json_encode($response);
-
-
-
+$conn->close();
 ?>

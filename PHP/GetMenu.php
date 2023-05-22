@@ -1,5 +1,5 @@
 <?php
-include("./connecte.php");
+include("./connect.php");
 
 $sql = "SELECT * FROM `menu` WHERE `Email` = '{$_GET['email']}'";
 $result = mysqli_query($conn, $sql);
