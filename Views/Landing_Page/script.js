@@ -57,7 +57,8 @@ function display() {
     var image = document.createElement('img');
     image.classList.add('card-img-top');
     image.src = ListOfItems[i].ImgUrl;
-    image.alt = 'Card Image';
+    // image.alt = 'Card Image';
+    image.alt = ListOfItems[i].ImgUrl;
     card.appendChild(image);
 
     // Create the card body
@@ -103,7 +104,7 @@ function AddToCart(name,price,url,code){
     existingItem.itemQuantity +=  1 ;
 
     totalPrice = totalPrice+parseFloat(price);
-    document.getElementById("totalPrice").innerHTML = totalPrice+"-/Rp";
+    document.getElementById("totalPrice").innerHTML = totalPrice+"-/Rs";
 
     const card = document.getElementById(`card-${existingItem.itemId}`);
     incrementCardQuantity(card);
@@ -123,31 +124,24 @@ function AddToCart(name,price,url,code){
 
   totalPrice = totalPrice+parseFloat(price);
 
-  document.getElementById("totalPrice").innerHTML = totalPrice+"-/Rp";
+  document.getElementById("totalPrice").innerHTML = totalPrice+"-/Rs";
 
 
   let card = document.createElement("div");
   // card text-left BuyItemCards
-  card.classList.add("card");
-  card.classList.add("text-left");
-  card.classList.add("BuyItemCards");
-  card.classList.add("slide-in-right");
+  card.classList.add("card","text-left","BuyItemCards","slide-in-right");
   card.setAttribute("id", "card-" + CartItemNumber);
 
 
   let cardBody = document.createElement("div");
-  cardBody.classList.add("card-body");
-  cardBody.classList.add("pt-1");
-  cardBody.classList.add("pb-0");
+  cardBody.classList.add("card-body","pt-1","pb-0");
 
   let row = document.createElement("div");
   row.classList.add("row");
   cardBody.appendChild(row);
   
   let col2 = document.createElement("div");
-  col2.classList.add("col-md-2");
-  col2.classList.add("p-0");
-  col2.classList.add("m-0");
+  col2.classList.add("col-md-2","p-0","m-0");
   row.appendChild(col2);
 
 
@@ -178,10 +172,7 @@ function AddToCart(name,price,url,code){
   row.appendChild(newCol5);
 
   let i = document.createElement("i");
-  i.classList.add("fa-solid");
-  i.classList.add("fa-xmark");
-  i.classList.add("float-right");
-  i.classList.add("my-1");
+  i.classList.add("fa-solid","fa-xmark","float-right","my-1");
   i.setAttribute("id", "card-" + CartItemNumber);
 
   i.addEventListener("click", function() {
@@ -217,6 +208,7 @@ function AddToCart(name,price,url,code){
   input.type="text";
   input.value="1";
   input.setAttribute("id", "input_" + CartItemNumber);
+  input.disabled = true;
   input_group.appendChild(input);
 
   let input_group_append= document.createElement("div");
@@ -263,7 +255,7 @@ function remove(cardID) {
     totalPrice -= parseFloat(removedItem.ItemPrice);
 
     // Update the total price element
-    document.getElementById("totalPrice").innerHTML = totalPrice + "-/Rp";
+    document.getElementById("totalPrice").innerHTML = totalPrice + "-/Rs";
 
     // Remove the card from the DOM
     let card = document.getElementById(cardID);
@@ -301,7 +293,7 @@ function Minus(id){
    if (existingItem) {
  
      totalPrice = totalPrice-(parseFloat(existingItem.ItemPrice)/parseFloat(existingItem.itemQuantity));
-     document.getElementById("totalPrice").innerHTML = totalPrice+"-/Rp";
+     document.getElementById("totalPrice").innerHTML = totalPrice+"-/Rs";
  
      // Item already exists in cart, update price and quantity
      existingItem.ItemPrice -= (parseFloat(existingItem.ItemPrice)/parseFloat(existingItem.itemQuantity));
@@ -332,7 +324,7 @@ function Plus(PlusID) {
     existingItem.ItemPrice += (parseFloat(existingItem.ItemPrice) / parseFloat(existingItem.itemQuantity));
     existingItem.itemQuantity += 1;
     totalPrice += (parseFloat(existingItem.ItemPrice) / parseFloat(existingItem.itemQuantity));
-    document.getElementById("totalPrice").innerHTML = totalPrice + "-/Rp";
+    document.getElementById("totalPrice").innerHTML = totalPrice + "-/Rs";
     ++document.getElementById("input_" + PlusID).value;
   }
 
@@ -535,7 +527,7 @@ function printDiv() {
   }
 
   totalPrice = 0;
-  document.getElementById("totalPrice").innerHTML = totalPrice+"-/Rp";
+  document.getElementById("totalPrice").innerHTML = totalPrice+"-/Rs";
 }
 
 

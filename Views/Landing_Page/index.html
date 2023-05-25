@@ -28,7 +28,7 @@
           </div>
       </span>
       <a href="./index.html" class="mt-3 " ><i class=" mt-1 fa-solid fa-house jello-horizontal"></i> </a>
-      <a href="#" class="mt-3"><i class="fa-solid fa-list jello-horizontal"></i> </a>
+      <a href="../DailySales_page/index.html" class="mt-3"><i class="fa-solid fa-list jello-horizontal"></i> </a>
       <a href="#" class="mt-3"><i class="fa-solid fa-bag-shopping jello-horizontal"></i> </a>
       <a href="#" class="mt-3"> <i class="fa-solid fa-file-invoice-dollar jello-horizontal"></i> </a>
       <a href="#" class="mt-3"><i class="fa-solid fa-money-bill-trend-up jello-horizontal"></i> </a>
@@ -40,48 +40,65 @@
 
 
   <div class="container-fluid">
-        <div class="row mt-2" style="position: sticky;">
-            <div class="col-md-1 p-2 ">
-                <span class="closebtn" onclick="openNav()">
-                <div id="nav-icon1">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </div>
-              </span>
+    <div class="top_Menu">
+      <div class="row mt-2 ">
+        <div class="col-md-1 p-2 ">
+            <span class="closebtn" onclick="openNav()">
+            <div id="nav-icon1">
+              <span></span>
+              <span></span>
+              <span></span>
             </div>
-            <div class="col-md-7">
-                <div class="searchBox" >
-                    <div class="circle" >
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control search" id="search" onchange="search(this.value)" placeholder="Search by Name or Code" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                            <div class="input-group-append ">
-                                <label class=" innerDiv" for="search" > <span class="input-group-text search-append h-100" id="basic-addon2"><i class=" fa-solid fa-magnifying-glass"></i></span></label>
-                            </div>
+          </span>
+        </div>
+        <div class="col-md-7">
+            <div class="searchBox" >
+                <div class="circle" >
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control search" id="search" onchange="search(this.value)" placeholder="Search by Name or Code" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append ">
+                            <label class=" innerDiv" for="search" > <span class="input-group-text search-append h-100" id="basic-addon2"><i class=" fa-solid fa-magnifying-glass"></i></span></label>
                         </div>
-                        
                     </div>
+                    
                 </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card result">
-                <div class="card-body p-0 m-0 ">
-                  <div class="row p-0 m-0 ">
-                    <div class="col-8 p-2 m-0 resultArea">
-                      <h4 class="card-title mt-2" id="totalPrice">Total</h4>
-                    </div>
-                    <div class="col-4 p-3" id="sell">
-                      <p class="card-text" onclick="sellConfirm()">Sell</p>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
             </div>
         </div>
+        <div class="col-md-4">
+          <div class="card result">
+            <div class="card-body p-0 m-0 ">
+              <div class="row p-0 m-0 ">
+                <div class="col-8 p-2 m-0 resultArea">
+                  <h4 class="card-title mt-2" id="totalPrice">Total</h4>
+                </div>
+                <div class="col-4 p-3" id="sell">
+                  <p class="card-text" onclick="sellConfirm()">Sell</p>
+                </div>
+              </div>
 
-        <div class="row">
+            </div>
+          </div>
+        </div>
+    </div>
+    </div>
+
+
+        <div class="row" style="margin-top: 85px;">
           <div class="col-md-8 ">
+            <div class="shortCuts">
+                <span class="shadow-drop-2-lr" class="shadow-drop-2-lr" id="" onclick="search(this.id)">All</span>
+                <span class="shadow-drop-2-lr" id="Burger" onclick="search(this.id)">Burger</span>
+                <span class="shadow-drop-2-lr" id="Samosa" onclick="search(this.id)">Samosa</span>
+                <span class="shadow-drop-2-lr" id="Fries" onclick="search(this.id)">Fries</span>
+                <span class="shadow-drop-2-lr" id="Tea" onclick="search(this.id)">Tea</span>
+                <span class="shadow-drop-2-lr" id="Pizza" onclick="search(this.id)">Pizza</span>
+                <span class="shadow-drop-2-lr" id="Pasta" onclick="search(this.id)">Pasta</span>
+                <span class="shadow-drop-2-lr" id="Chicken" onclick="search(this.id)">Chicken</span>
+                <span class="shadow-drop-2-lr" id="Cheese" onclick="search(this.id)">Cheese</span>
+                <span class="shadow-drop-2-lr" id="Paratha" onclick="search(this.id)">Paratha</span>
+                <span class="shadow-drop-2-lr" id="Omelette" onclick="search(this.id)">Omelette</span>
+            </div>
+
             <div class="boxes" id="ItemsDisplay" >
 
               <!-- <div class="card text-left itemCards">
