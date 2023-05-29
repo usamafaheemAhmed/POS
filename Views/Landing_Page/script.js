@@ -30,7 +30,8 @@ window.onload = () => {
             console.log(resData);
             ListOfItems=resData;
             // alert(res);
-            display();
+          display();
+          createMenuCard();
 
         }        
     });
@@ -88,6 +89,56 @@ function display() {
     container.appendChild(card);
   }
 }
+function createMenuCard() {
+  // Create the outer card container
+  for (let i = 0; i < ListOfItems.length; i++) {
+    
+    const card = document.createElement("div");
+    card.classList.add("card", "text-left", "mobileitemCards");
+
+    // Create the row container
+    const row = document.createElement("div");
+    row.classList.add("row", "px-3");
+    card.appendChild(row);
+
+    // Create the card image
+    const img = document.createElement("img");
+    img.classList.add("card-img-top");
+    img.src = ListOfItems[i].ImgUrl;
+    img.alt = ListOfItems[i].ImgUrl;
+    row.appendChild(img);
+
+    // Create the card body
+    const cardBody = document.createElement("div");
+    cardBody.classList.add("card-body", "text-center");
+    row.appendChild(cardBody);
+
+    // Create the card title
+    const h4 = document.createElement("h4");
+    h4.classList.add("card-title");
+    h4.textContent = ListOfItems[i].itemName;
+    cardBody.appendChild(h4);
+
+    // Create the card price
+    const p = document.createElement("p");
+    p.classList.add("card-text");
+    p.textContent = ListOfItems[i].ItemPrice + "/-Rs";
+    cardBody.appendChild(p);
+
+    card.addEventListener('click', function() {
+      AddToList(ListOfItems[i].itemName, ListOfItems[i].ItemPrice, ListOfItems[i].ItemCode);
+    });
+
+    let container = document.getElementById('mobilebox');
+    container.appendChild(card);
+  }
+}
+
+
+
+
+
+
 
 
 let CartItemNumber = 0;
@@ -236,7 +287,87 @@ function AddToCart(name,price,url,code){
 
   ++CartItemNumber;
 }
+function AddToList(name, price, code) {
+  let existingItem = buyArray.find(item => item.ItemCode === code);
 
+  if (existingItem) {
+    // Item already exists in the list, update the quantity
+    existingItem.ItemPrice += parseFloat(price);
+    existingItem.itemQuantity += 1;
+
+    updateBuyListQuantity(existingItem.itemId, existingItem.itemQuantity);
+
+    // Update total price
+    totalPrice += parseFloat(price);
+    document.getElementById("MobileTotalePrice").value = totalPrice + "-/Rs";
+
+    return;
+  }
+
+  let listItem = document.createElement("li");
+  listItem.setAttribute("id", "listItem-" + CartItemNumber);
+  
+  let quantitySpan = document.createElement("span");
+  quantitySpan.textContent = "1 -";
+
+  let nameSpan = document.createElement("span");
+  nameSpan.textContent = name + " - ";
+
+  let priceSpan = document.createElement("span");
+  priceSpan.textContent = price + "/-Rs";
+
+  let crossButton = document.createElement("span");
+  crossButton.classList.add("fa", "fa-xmark", "float-right");
+
+  // Add click event listener to the cross button
+  crossButton.addEventListener("click", function() {
+    removeItemFromBuyList(listItem, code);
+  });
+
+  listItem.appendChild(nameSpan);
+  listItem.appendChild(quantitySpan);
+  listItem.appendChild(priceSpan);
+  listItem.appendChild(crossButton);
+
+  let buyList = document.getElementById("buyList");
+  buyList.appendChild(listItem);
+
+  // Update buyArray
+  let add = {
+    itemId: CartItemNumber,
+    itemName: name,
+    ItemPrice: parseFloat(price),
+    ItemCode: code,
+    itemQuantity: 1,
+  }
+  buyArray.push(add);
+
+  // Update total price
+  totalPrice += parseFloat(price);
+  document.getElementById("MobileTotalePrice").value = totalPrice + "-/Rs";
+
+  ++CartItemNumber;
+}
+
+function updateBuyListQuantity(itemId, quantity) {
+  let listItem = document.getElementById("listItem-" + itemId);
+  let quantitySpan = listItem.querySelector("span:nth-child(2)");
+  quantitySpan.textContent = quantity + "-";
+}
+
+function removeItemFromBuyList(listItem, code) {
+  // Remove the item from buyArray
+  let index = buyArray.findIndex(item => item.ItemCode === code);
+  if (index !== -1) {
+    let removedItem = buyArray.splice(index, 1)[0];
+    // alert(removedItem.ItemPrice);
+    totalPrice = totalPrice - (removedItem.ItemPrice);
+    document.getElementById("MobileTotalePrice").value = totalPrice + "-/Rs";
+  }
+
+  // Remove the list item from the buyList
+  listItem.remove();
+}
 
 
 
@@ -522,12 +653,23 @@ function printDiv() {
   const buyBoxes = document.getElementById("buyBoxes");
   const cards = buyBoxes.getElementsByClassName("card");
 
+  const buyList = document.getElementById("buyList");
+  const li = buyList.getElementsByTagName("li");
+
+
   while (cards.length > 0) {
     buyBoxes.removeChild(cards[0]);
   }
 
+  
+  while (li.length > 0) {
+    buyList.removeChild(li[0]);
+  }
+
   totalPrice = 0;
-  document.getElementById("totalPrice").innerHTML = totalPrice+"-/Rs";
+  document.getElementById("totalPrice").innerHTML = totalPrice + "-/Rs";
+  document.getElementById("MobileTotalePrice").value = totalPrice + "-/Rs";
+  
 }
 
 

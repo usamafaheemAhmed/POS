@@ -39,7 +39,7 @@
     </div>
 
 
-  <div class="container-fluid">
+  <div class="container-fluid desktop">
     <div class="top_Menu">
       <div class="row mt-2 ">
         <div class="col-md-1 p-2 ">
@@ -113,8 +113,8 @@
               
             </div>
           </div>
-          <div class="col-md-4 pt-0" >
-              <div class="buyBoxes pt-0 mt-1" id="buyBoxes">
+          <div class="col-md-4 p-0 " >
+              <div class=" col-md-12 buyBoxes  pt-0 mt-1" id="buyBoxes">
             
                 <!--  card which i am generating in this byrBoxes Div
                   <div class="card text-left BuyItemCards slide-in-right" id="card-{itemId}">
@@ -148,8 +148,85 @@
           Launch
         </button>
         
-        <!-- Modal -->
-        <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+  </div>
+
+  <div class="container-fluid mobile p-0 m-0">
+        
+    <div class="col-md-1 p-2">
+      <span class="closebtn" onclick="openNav()">
+      <div id="nav-icon1">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </span>
+  </div>
+  
+    <div class="mobilebox p-3" id="mobilebox">
+
+              <div class="card text-left mobileitemCards">
+                <div class="row px-3">
+                  <img class="card-img-top" src="../Item_Images/CCSw.jpeg" alt="cardIMage" >
+                  <div class="card-body text-center">
+                    <h4 class="card-title">Chicken Zinger Burger</h4>
+                    <p class="card-text">200/-Rs</p>
+                  </div>
+                </div>
+              </div>
+     
+    </div>
+
+    <div class="card text-left mobilebuyCards">
+
+      <div class="collapse p-1" id="buyList">
+        
+        
+      </div>
+
+
+      <div class="input-group">
+        <span class="input-group-addon p-1"  data-toggle="collapse" data-target="#buyList" aria-expanded="false" aria-controls="buyList">
+          <i class="fa fa-angle-down" aria-hidden="true"></i></span>
+        <input type="text" name="name" id="MobileTotalePrice" class="form-control" placeholder="placeholder" >
+        <button class="btn input-group-addon MobileSellButton p-1" onclick="sellConfirm()">Sell</button>
+      </div>
+    </div>
+
+
+  </div>
+
+
+
+
+
+
+
+
+    <div class="Print" id="Print">
+      <div class="row">
+        <div class="col-md-4">
+          <h3>Receipt</h3>
+          <h5>Order ID: <span id="OrderId"></span></h5>
+          <h5>Date :  <span id="Date"></span></h5>
+          <table class="table table-borderless">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total</th>
+              </tr>
+            </thead>
+            <tbody id="ReceiptTable">
+            </tbody>
+          </table>
+          <h5>Total: <span id="OrderTotal"></span></h5>
+        </div>
+      <div class="col-md-8"></div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -187,47 +264,6 @@
               </div>
             </div>
           </div>
-        </div>
-        
-        <!-- <script>
-          $('#exampleModal').on('show.bs.modal', event => {
-            var button = $(event.relatedTarget);
-            var modal = $(this);
-            // Use above variables to manipulate the DOM
-            
-          });
-        </script> -->
-
-
-
-
-
-
-
-  </div>
-
-    <div class="Print" id="Print">
-      <div class="row">
-        <div class="col-md-4">
-          <h3>Receipt</h3>
-          <h5>Order ID: <span id="OrderId"></span></h5>
-          <h5>Date :  <span id="Date"></span></h5>
-          <table class="table table-borderless">
-            <thead>
-              <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Total</th>
-              </tr>
-            </thead>
-            <tbody id="ReceiptTable">
-            </tbody>
-          </table>
-          <h5>Total: <span id="OrderTotal"></span></h5>
-        </div>
-      <div class="col-md-8"></div>
-      </div>
     </div>
     <!-- Optional JavaScript; choose one of the two! -->
 

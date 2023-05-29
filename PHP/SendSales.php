@@ -19,7 +19,7 @@ if (!$stmt) {
 }
 
 foreach ($SalesArray as $sales) {
-  $Sales_ID = '';
+  $Sales_ID = null;
   $result = $stmt->bind_param("ssssissis", $Sales_ID, $OrderId, $sales["itemName"], $sales["ItemCode"], $sales["itemQuantity"], $currentDate, $currentTime, $sales["ItemPrice"], $Email);
 
   if (!$result) {

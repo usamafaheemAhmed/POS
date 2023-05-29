@@ -374,18 +374,26 @@ overflow-x: hidden;
     margin-left: 10px;
   }
 
-  .buyBoxes{
+
+
+   .buyBoxes{
       /* display: flex; */
+      /* background-color: #E9EEF2; */
+      width: 100%;
+      
     padding: 10px 10px 10px 10px;
-    /* background-color: #E9EEF2; */
-    width: 425px;
     border:2px solid #E65C4F;
     border-radius: 5px 5px 5px 5px;
     height: var(--height2);
-    /* max-height: var(--height2); */
-    position: fixed;
+    max-height: var(--height2);
+    position: absolute;
     overflow-y: auto ;
-  }
+
+
+
+
+  } 
+
   .BuyItemCards{
     /* background-color: #78A6C8; */
     background-color: #326789;
@@ -461,7 +469,9 @@ overflow-x: hidden;
 
 
 
-
+.mobile{
+  display: none;
+}
 
 
   .closebtn{
@@ -476,6 +486,87 @@ overflow-x: hidden;
         justify-content: left;
         align-content: left;
       }
+
+      .mobile{
+        display: block;
+      }
+
+      .desktop{
+        display: none;
+      }
+
+      .mobileitemCards{
+        box-shadow: 8px 8px 24px -14px rgba(0,0,0,0.22);
+        -webkit-box-shadow: 8px 8px 24px -14px rgba(0,0,0,0.22);
+        -moz-box-shadow: 8px 8px 24px -14px rgba(0,0,0,0.22);
+        margin: 0px 10px 10px 0px;
+      }
+
+        .mobileitemCards .card-body{
+        padding-top: 0.5rem !important;
+        }
+        input:disabled{
+          background-color: #326789 !important;
+          color: #E65C4F !important;
+        }
+      
+        .mobileitemCards .card-text{
+          color: #E65C4F;
+          font-family: 'Source Sans Pro', sans-serif;
+          font-weight: 700;
+          font-size: 20px;
+          text-align: center;
+          
+        }
+        .mobileitemCards .card-title{
+          font-size: 18px;
+          margin-top: 0px;
+          margin-bottom: 0px;
+          font-weight: 600;
+        }
+        .mobileitemCards .card-img-top {
+          height: 90px;
+          width: 100px;
+          object-fit: cover;
+        }
+        .mobilebuyCards{
+          position: absolute;
+          bottom: 0px;
+          height: fit-content;
+          width: 100%;
+          border: 2px solid #E65C4F;
+          padding-top: 5px;
+          background-color: #E65C4F;
+        }
+        .mobilebuyCards .form-control{
+          border: #E65C4F;
+          color: #ffff;
+        }
+        .mobilebuyCards .form-control:is(:hover,:focus,:active){
+          border: #E65C4F;
+          color: #ffff;
+          background-color: #E65C4F;
+          box-shadow: none;
+        }
+        .mobilebuyCards .form-control::placeholder{
+          /* border: #E65C4F; */
+          color: #ffff;
+        }
+        .input-group-addon{
+          font-size: 20px;
+          font-weight: 600;
+        }
+      .MobileSellButton  {
+          background-color: #326789;
+          color: #E9EEF2;
+          
+        }
+        .MobileSellButton:is(:hover,:focus,:active){
+          background-color: #E65C4F;
+          color: #E9EEF2;
+          
+        }
+
 }
 
 
