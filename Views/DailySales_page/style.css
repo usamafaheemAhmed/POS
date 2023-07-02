@@ -254,7 +254,6 @@ overflow-x: hidden;
         font-weight: 600;
         font-size: 16px;
         text-align: center;
-        float: right;
     }
     .excel:is(:hover,:focus,:active){
         background-color: #E65C4F;
@@ -262,10 +261,21 @@ overflow-x: hidden;
     }
 
 
+    .excelDelete{
+      border: 2px solid #E65C4F;
+      border-radius: 10px ;
+      color: #326789;
+      font-family: 'Source Sans Pro', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      text-align: center;
+    }
 
-
-
-
+    .excelDelete:is(:hover,:focus,:active){
+      border: 2px solid #E65C4F;
+      color: #326789;
+      box-shadow: none;
+     }
 
 
 

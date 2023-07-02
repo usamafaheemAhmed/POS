@@ -379,18 +379,14 @@ overflow-x: hidden;
    .buyBoxes{
       /* display: flex; */
       /* background-color: #E9EEF2; */
-      width: 100%;
-      
+    width: 33%;
     padding: 10px 10px 10px 10px;
     border:2px solid #E65C4F;
     border-radius: 5px 5px 5px 5px;
     height: var(--height2);
     max-height: var(--height2);
-    position: absolute;
+    position: fixed;
     overflow-y: auto ;
-
-
-
 
   } 
 
@@ -479,6 +475,24 @@ overflow-x: hidden;
     justify-content: center;
     align-content: center;
   }
+
+  /* 852 */
+
+  @media screen and (max-width: 852px ) {
+
+    #sell{
+      font-family: 'Source Sans Pro', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 32px;
+    }
+
+
+
+  }
+
+
+
   @media screen and (max-width: 767px) {
 
     .closebtn{
@@ -530,7 +544,7 @@ overflow-x: hidden;
           object-fit: cover;
         }
         .mobilebuyCards{
-          position: absolute;
+          position: fixed;
           bottom: 0px;
           height: fit-content;
           width: 100%;
@@ -559,6 +573,7 @@ overflow-x: hidden;
       .MobileSellButton  {
           background-color: #326789;
           color: #E9EEF2;
+          padding: 5px 5px 5px 5px;
           
         }
         .MobileSellButton:is(:hover,:focus,:active){

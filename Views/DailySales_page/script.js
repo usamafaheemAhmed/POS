@@ -43,7 +43,6 @@ window.onload = () => {
 };
 
 let totalPriceOfDay = 0; 
-  
 
 function display_Sales() {
   // Assuming `salesData` is the array containing the fetched sales data
@@ -63,6 +62,7 @@ ListOfSales.forEach(sale => {
 
   const itemNameCell = document.createElement('td');
   itemNameCell.textContent = sale.itemName;
+  itemNameCell.classList.add("NameTag")
   row.appendChild(itemNameCell);
 
   const itemCodeCell = document.createElement('td');
@@ -114,20 +114,26 @@ const totalText = document.createElement('td');
 
 }
 
-
-
 function exportToExcel() {
   const table = document.querySelector('table');
-  const tableData = Array.from(table.querySelectorAll('tr')).map(row => {
-    return Array.from(row.querySelectorAll('th, td')).map(cell => cell.textContent);
-  });
+  const rows = Array.from(table.querySelectorAll('tr'));
+  const headerRow = table.querySelector('thead tr');
+  const headerData = Array.from(headerRow.querySelectorAll('th')).map(cell => cell.textContent);
+  const tableData = rows.map(row => {
+    if (row.style.display !== 'none') {
+      return Array.from(row.querySelectorAll('td')).map(cell => cell.textContent);
+    }
+    return null;
+  }).filter(rowData => rowData !== null);
+
+  tableData.unshift(headerData);
 
   const worksheet = XLSX.utils.aoa_to_sheet(tableData);
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, 'Sales Data');
   const excelData = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
 
-  saveAsExcelFile(excelData, 'sales_data.xlsx');
+  saveAsExcelFile(excelData, 'visible_sales_data.xlsx');
 }
 
 function saveAsExcelFile(data, filename) {
@@ -147,11 +153,12 @@ function saveAsExcelFile(data, filename) {
   }
 }
 
-
 function searchByDate(value) {
   let searchTerm = value;
   let tbody = document.getElementById("salesTableBody");
   let tr = tbody.getElementsByTagName("tr");
+
+  // alert(searchTerm);
 
   for (let i = 0; i < tr.length; i++) {
     let dateTag = tr[i].querySelector(".dateTag");
@@ -163,18 +170,61 @@ function searchByDate(value) {
       // Compare the date text with the provided value
       if (dateText !== searchTerm) {
         tr[i].style.display = "none";
+        // alert('matched');
       } else {
         tr[i].style.display = "table-row";
+        // alert('Notmatched1');
       }
     } else {
       // Show the row if it doesn't have a dateTag element
       tr[i].style.display = "table-row";
+      // alert('Notmatched2');
     }
   }
 
   calculateVisibleTotal();
 }
 
+function showAllRows() {
+  let tbody = document.getElementById("salesTableBody");
+  let tr = tbody.getElementsByTagName("tr");
+
+  for (let i = 0; i < tr.length; i++) {
+    tr[i].style.display = "table-row";
+  }
+  calculateVisibleTotal();
+}
+
+function searchByName(value) {
+  let searchTerm = value;
+  let tbody = document.getElementById("salesTableBody");
+  let tr = tbody.getElementsByTagName("tr");
+
+  // alert(searchTerm);
+
+  for (let i = 0; i < tr.length; i++) {
+    let NameTag = tr[i].querySelector(".NameTag");
+
+    // Check if the dateTag element exists within the current table row
+    if (NameTag) {
+      let NameText = NameTag.innerText;
+
+      // Compare the date text with the provided value
+      if (NameText !== searchTerm) {
+        tr[i].style.display = "none";
+        // alert('matched');
+      } else {
+        tr[i].style.display = "table-row";
+        // alert('Notmatched1');
+      }
+    } else {
+      // Show the row if it doesn't have a dateTag element
+      tr[i].style.display = "table-row";
+      // alert('Notmatched2');
+    }
+  }
+  calculateVisibleTotal();
+}
 
 function calculateVisibleTotal() {
   let tbody = document.getElementById("salesTableBody");
@@ -197,4 +247,53 @@ function calculateVisibleTotal() {
   return total;
 }
 
+function DeleteOrder() {
+  let orderId = document.getElementById("OrderId").value;
 
+  let data = {
+    OrderID: orderId,
+  }
+
+
+  $.ajax({
+        
+    url: "../../PHP/DeleteOrder.php",
+    method: "POST",
+    data: data,
+    success: function (res) {
+
+      alert(res);
+      $("[data-toggle = modal]").trigger({ type: "click" });
+     }
+  });
+
+  document.getElementById("salesTableBody").innerHTML = "";
+  
+
+    //    let email =  sessionStorage.getItem("email");
+    let email =  "usamafaheem80@gmail.com";
+  
+    // alert(email);
+    let data2 = {
+        email: email,
+    }
+
+    $.ajax({
+        
+        url: "../../PHP/GetSales.php",
+        method:"GET",
+        data: data2,
+        success: function (res) {
+            // console.log(res);
+            let resData = JSON.parse(res);
+            console.log(resData);
+            ListOfSales = resData;
+          console.log(ListOfSales);
+            // alert(res);
+          display_Sales();
+
+
+        }        
+    });
+
+}
