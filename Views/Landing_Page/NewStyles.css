@@ -446,9 +446,9 @@ overflow-x: hidden;
   .shortCuts span{
     border: 1px solid #E65C4F;
 
-  box-shadow: 10px 5px 32px -12px rgba(0,0,0,0.9);
-  -webkit-box-shadow: 10px 5px 32px -12px rgba(0,0,0,0.9);
-  -moz-box-shadow: 10px 5px 32px -12px rgba(0,0,0,0.9);
+    box-shadow: 10px 5px 32px -12px rgba(0,0,0,0.9);
+    -webkit-box-shadow: 10px 5px 32px -12px rgba(0,0,0,0.9);
+    -moz-box-shadow: 10px 5px 32px -12px rgba(0,0,0,0.9);
 
     border-radius: 25px;
     padding: 5px 10px 5px 10px;
@@ -460,10 +460,8 @@ overflow-x: hidden;
     text-align: center;
     color: #326789;
 
+    
   }
-
-
-
 
 .mobile{
   display: none;
