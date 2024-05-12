@@ -1,26 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap');
-
-
-:root{
-  --height: 643px;
-  --height2: 643px;
-}
-
-body{
-  /* font-family: 'Oswald', sans-serif; */
-font-family: 'Source Sans Pro', sans-serif;
-overflow-x: hidden;
-}
-
-
-.top_Menu{
-    position: fixed; /* Set the navbar to fixed position */
-    top: 0; /* Position the navbar at the top of the page */
-    width: 98%;
-    z-index: 1;
-  }
-
-  
+ 
   /**side Menu CSS**/
 
   .sidenav {
@@ -241,52 +219,213 @@ overflow-x: hidden;
       width: 100%;
     }
 
-    .thead-blue{
-        color: #ffff;
-        background-color: #326789;
-    }
 
-    .excel{
-        border: 2px solid #E65C4F;
-        border-radius: 10px ;
-        color: #326789;
-        font-family: 'Source Sans Pro', sans-serif;
-        font-weight: 600;
-        font-size: 16px;
-        text-align: center;
+    .searchBox{
+      display: flex;
+      /* flex-wrap: wrap; */
+      align-items: center;
+      justify-content: center;
     }
-    .excel:is(:hover,:focus,:active){
-        background-color: #E65C4F;
-        color: #ffff;
+  
+    .search{
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      color: #E9EEF2;
     }
+    .search::placeholder{
+      color: #E9EEF2;
+    }
+  
+    .search:is(:focus,:hover,:active){
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      color: #E9EEF2;
+    }
+  
+   .search-append{
+      border-radius: 25px 25px 25px 25px !important;
+      background-color: #E65C4F;
+      border: none;
+      color: #E9EEF2;
+      height: 40px !important;
+    }
+  
 
-
-    .excelDelete{
+    .circle{
+      border-radius: 25px 25px 25px 25px;
+      background-color: #326789;
+      width: 300px;
+      height: 50px;
+      padding: 6px 6px 0px 6px;
+    }
+    .roundedbuy{
+      border-radius: 100% !important;
+      object-fit: cover;
+      width: 60px;
+      height: 60px ;
+      transition: width .5s ,height .5s;
       border: 2px solid #E65C4F;
-      border-radius: 10px ;
-      color: #326789;
-      font-family: 'Source Sans Pro', sans-serif;
-      font-weight: 600;
-      font-size: 16px;
-      text-align: center;
+      margin-left: 20px;
     }
-
-    .excelDelete:is(:hover,:focus,:active){
+    .roundedbuy2{
+      border-radius: 100% !important;
+      object-fit: cover;
+      width: 30%;
+      height: 120px ;
+      transition: width .5s ,height .5s;
       border: 2px solid #E65C4F;
-      color: #326789;
-      box-shadow: none;
-     }
+      /* margin-left: 20px; */
+    }
+  
+    .itemCards{
+      width: 425px !important;
+      height: 100px !important;
+      padding-bottom: 10px;
+      box-shadow: 8px 8px 24px -14px rgba(0,0,0,0.22);
+      -webkit-box-shadow: 8px 8px 24px -14px rgba(0,0,0,0.22);
+      -moz-box-shadow: 8px 8px 24px -14px rgba(0,0,0,0.22);
+      }
+      .itemCards .card-body{
+      padding-top: 0.5rem !important;
+      }
 
-
-.SousesTag ul{
-  padding-left: 12px;
-  margin: 0px 0px 0px 0px;
+.card {
+  transform: scale(1);
+  transition: all 0.1s ease-out;
 }
 
 
+.card .card-text{
+  color: #b4b4b4;
+  padding: 0px;
+  margin: 0px;
+}
+.card .card-title{
+  margin: 0px;
+  padding: 0px
+}
     
+.card:hover{
+  transform: scale(1.1);
+  background: rgb(50,103,137);
+  background: linear-gradient(306deg, rgba(50,103,137,1) 16%, rgba(95,152,189,1) 91%);
+  color: #E9EEF2;
+}
+.dropdown-menu{
+ background-color: #E65C4F !important;
+ position: absolute;
+ z-index: 100 inherit;
+}
+
+.Update{
+  color:#326789;
+  border:2px solid #326789;
+  font-weight: 600;
+}
+.Update:is(:focus,:hover,:active){
+  color:#E9EEF2;
+  border:2px solid #326789;
+  background-color: #326789;
+}
+.modal-header{
+  color:#E9EEF2;
+  border:2px solid #326789;
+  background-color: #326789;
+}
+.modal-header .close{
+  color:#E9EEF2;
+}
+
+.boxes{
+  display: flex;
+  gap: .5rem;
+  padding: 10px 10px 10px 10px;
+  flex-wrap: wrap;
+}
+
+
+.excel{
+  border: 2px solid #E65C4F;
+  color: #326789;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+}
+.excel:is(:hover,:focus,:active){
+  background-color: #E65C4F;
+  color: #ffff;
+}
+
+
+
+
+
+.h_display{
+  height: 90vh !important;
+}
+.h_display h2{
+  color: #326789;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+}
+.h_display h2 span{
+  color:#E65C4F;
+}
+.h_display p{
+  color: #326789;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 500;
+  
+}
+.h_display p span,.h_display p span a{
+  color:#E65C4F !important;
+  font-weight: 700;
+}
+
+
 
 /**Animations CSS**/
+
+.slide-top:hover {
+	-webkit-animation: slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+/* ----------------------------------------------
+ * Generated by Animista on 2023-6-8 1:6:49
+ * Licensed under FreeBSD License.
+ * See http://animista.net/license for more info. 
+ * w: http://animista.net, t: @cssanimista
+ * ---------------------------------------------- */
+
+/**
+ * ----------------------------------------
+ * animation slide-top
+ * ----------------------------------------
+ */
+ @-webkit-keyframes slide-top {
+  0% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+  100% {
+    -webkit-transform: translateY(-5px);
+            transform: translateY(-5px);
+  }
+}
+@keyframes slide-top {
+  0% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+  100% {
+    -webkit-transform: translateY(-5px);
+            transform: translateY(-5px);
+  }
+}
 
 
 

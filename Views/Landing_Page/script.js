@@ -11,12 +11,15 @@ r.style.setProperty('--height2', height2);
 window.onload = () => {
     
 
-//    let email =  sessionStorage.getItem("email");
-   let email =  "usamafaheem80@gmail.com";
+   let email =  sessionStorage.getItem("email")||"usamafaheem80@gmail.com";
+   let Owner_Fk =  sessionStorage.getItem("Login_id")||"87262";
+  // let email = "usamafaheem80@gmail.com";
+  
 
-    // alert(email);
+    // alert(Owner_Fk);
     let data = {
         email: email,
+        Owner_Fk: Owner_Fk
     }
 
     $.ajax({
@@ -30,13 +33,128 @@ window.onload = () => {
             console.log(resData);
             ListOfItems=resData;
             // alert(res);
-          display();
+          display(ListOfItems);
           createMenuCard();
-
+          Category()
+          display_codes()
         }        
     });
 
 };
+
+function display_codes() {
+  let forCodePrint = ListOfItems;
+
+  forCodePrint.map((elem, index) => {
+    let box = document.createElement('div');
+    box.classList.add('SearchDropDown', 'px-2');
+    box.innerHTML = elem.ItemCode;
+  
+    // Use a closure to capture the correct value of elem
+    box.addEventListener('click', (function(itemCode) {
+      return function() {
+        storeInSearch(itemCode);
+      };
+    })(elem.ItemCode));
+  
+    document.getElementById('Display_ItemCode').append(box);
+  });
+  
+}
+
+function showDropDown(value) {
+  let searchTerm = value.toLowerCase();
+  let container = document.getElementById("Display_ItemCode");
+  let cards = container.querySelectorAll(".SearchDropDown");
+
+  for (let i = 0; i < cards.length; i++) {
+    let innerContent = cards[i].textContent.toLowerCase();
+    if (innerContent.includes(searchTerm)) {
+      cards[i].style.display = "block";
+    } else {
+      cards[i].style.display = "none";
+    }
+  }
+
+  // Show or hide the main container based on whether any matching items were found
+  container.classList.toggle('d-none', !Array.from(cards).some(card => card.style.display === 'block'));
+}
+
+function storeInSearch(value) {
+  // alert(value)
+  document.getElementById('search').value = value;
+  search(value);
+}
+
+
+function ShowTable() {
+  document.getElementById("TableInput").classList.toggle('d-none');
+  document.getElementById("tableNum").classList.toggle('d-none');
+}
+
+function ShowCustomer_Info() {
+  var elements = document.getElementsByClassName("Customer_Info");
+
+  // Loop through each element and toggle the 'd-none' class
+  for (var i = 0; i < elements.length; i++) {
+      elements[i].classList.toggle('d-none');
+  }
+  // document.getElementById("tableNum").classList.toggle('d-none');
+}
+
+function Category() {
+
+  let categorizedItems = new Set(ListOfItems.map(item => item.category));
+
+
+  // console.log(categorizedItems);
+  let categoriesContainer = document.getElementById('Categories'); // Replace 'categories-container' with the actual ID of your container
+
+  // Loop through each category and create HTML elements
+  categorizedItems.forEach(category => {
+
+      let categoryElement = document.createElement('span');
+      categoryElement.textContent = category;
+    
+      // categoryElement.textContent = category;
+      categoryElement.classList.add('shadow-drop-2-lr');
+      categoryElement.id = category;
+      categoryElement.onclick = function() {
+          search2(this.id);
+      };
+  
+      categoriesContainer.appendChild(categoryElement);
+  });
+
+  let categoryElement = document.createElement('span');
+  categoryElement.textContent = "All";
+
+  // categoryElement.textContent = category;
+  categoryElement.classList.add('shadow-drop-2-lr');
+  categoryElement.id = "";
+  categoryElement.onclick = function() {search2(this.id);};
+  categoriesContainer.appendChild(categoryElement);
+
+
+  
+}
+
+function search2(Value) {
+  // alert(Value);
+  document.getElementById('ItemsDisplay').innerHTML="";
+  if (Value) {    
+    let new_Array = ListOfItems;
+    // Filter the array based on the selected category
+    let filteredArray = new_Array.filter(obj => obj.category === Value);
+  
+    display(filteredArray)
+  }
+  else {
+    // console.log("empty")
+    display(ListOfItems)
+  }
+
+}
 
 function openNav() {
   document.getElementById("mySidenav").style.width = "80px";
@@ -47,9 +165,9 @@ function closeNav() {
  
 }
 
-function display() {
+function display(GivenArray) {
 
-  for (let i = 0; i < ListOfItems.length; i++) {
+  for (let i = 0; i < GivenArray.length; i++) {
     // Create the card element
     var card = document.createElement('div');
     card.classList.add('card', 'text-left', 'itemCards');
@@ -57,9 +175,9 @@ function display() {
     // Create the card image
     var image = document.createElement('img');
     image.classList.add('card-img-top');
-    image.src = ListOfItems[i].ImgUrl;
+    image.src = GivenArray[i].ImgUrl;
     // image.alt = 'Card Image';
-    image.alt = ListOfItems[i].ImgUrl;
+    image.alt = GivenArray[i].ImgUrl;
     card.appendChild(image);
 
     // Create the card body
@@ -68,21 +186,29 @@ function display() {
 
     // Create the card title
     var title = document.createElement('h4');
-    title.classList.add('card-title');
-    title.textContent = ListOfItems[i].itemName;
+    title.classList.add('card-title','footer');
+    title.textContent = GivenArray[i].itemName;
     cardBody.appendChild(title);
+
+    
+    // Create the card category
+    var category = document.createElement('p');
+    category.classList.add('text-muted');
+    category.textContent = GivenArray[i].category;
+    cardBody.appendChild(category);
+
 
     // Create the card price
     var price = document.createElement('p');
     price.classList.add('card-text');
-    price.textContent = ListOfItems[i].ItemPrice + '-/Rs';
+    price.textContent = GivenArray[i].ItemPrice + '-/Rs';
     cardBody.appendChild(price);
 
     card.appendChild(cardBody);
 
     // Add event listener to the card
     card.addEventListener('click', function() {
-      AddToCart(ListOfItems[i].itemName, ListOfItems[i].ItemPrice, ListOfItems[i].ImgUrl, ListOfItems[i].ItemCode);
+      AddToCart(GivenArray[i].itemName, GivenArray[i].ItemPrice, GivenArray[i].ImgUrl, GivenArray[i].ItemCode);
     });
 
     let container = document.getElementById('ItemsDisplay');
@@ -133,13 +259,6 @@ function createMenuCard() {
     container.appendChild(card);
   }
 }
-
-
-
-
-
-
-
 
 let CartItemNumber = 0;
 let buyArray = [];
@@ -473,35 +592,25 @@ function decrementCardQuantity(card) {
   inputElement.value = currentValue - 1;
 }
 
-
 function search(value){
-
-  let length = ListOfItems.length;
-  // alert(length);
-
-  let searchTerm = value.toLowerCase()
-
-  let container = document.getElementById("ItemsDisplay");
-
-// Get all the cards in the container
-let cards = container.querySelectorAll(".card");
-
-// Loop through all the cards and show/hide them based on whether their item name contains the search term
-for (let i = 0; i < cards.length; i++) {
-  let itemName = cards[i].querySelector(".card-title").textContent.toLowerCase();
-  if (itemName.indexOf(searchTerm) === -1) {
-    cards[i].style.display = "none";
-  } else {
-    cards[i].style.display = "block";
+  document.getElementById("Display_ItemCode").classList.add("d-none");
+  document.getElementById('ItemsDisplay').innerHTML = "";
+  // alert(value);
+  if (value) {    
+    let new_Array = ListOfItems;
+    // Filter the array based on the selected category
+    let filteredArray = new_Array.filter(obj => obj.ItemCode === value);
+    console.log(filteredArray);
+    display(filteredArray)
+  }
+  else {
+    // console.log("empty")
+    display(ListOfItems)
   }
 }
 
-
-
-}
-
 function sellConfirm(){
-  console.log(buyArray);
+  // console.log(buyArray);
  
     let OrderId = generateOrderID() ;
 
@@ -564,8 +673,8 @@ for (let i = 0; i < buyArray.length; i++) {
 
 }
 
-document.getElementById("OrderTotal").innerHTML=GrandTotal;
-document.getElementById("OrderTotal2").innerHTML=GrandTotal;
+document.getElementById("OrderTotal").innerHTML=toComma(GrandTotal);
+document.getElementById("OrderTotal2").innerHTML=toComma(GrandTotal);
 
 // printDiv();
 
@@ -587,26 +696,112 @@ const generateOrderID = () => {
   return day + date + hours + seconds;
 };
 
+function Modal_Back() {
+
+  document.getElementById('ModalTable_1').classList.remove('d-none')
+  document.getElementById('ModalTable_2').classList.add('d-none')
+  document.getElementById('Modal_Close').classList.remove('d-none')
+  document.getElementById('Modal_Back_btn').classList.add('d-none')
+  document.getElementById('Modal_Next_btn').classList.remove('d-none')
+  document.getElementById('Modal_Confirm').classList.add('d-none')
+
+}
+function Modal_Next() {
+
+  document.getElementById('ModalTable_1').classList.add('d-none')
+  document.getElementById('ModalTable_2').classList.remove('d-none')
+  document.getElementById('Modal_Next_btn').classList.add('d-none')
+  document.getElementById('Modal_Confirm').classList.remove('d-none')
+  document.getElementById('Modal_Close').classList.add('d-none')
+  document.getElementById('Modal_Back_btn').classList.remove('d-none')
+
+}
+
 function Confirm(){
-  $("[data-toggle = modal]").trigger({ type: "click" });
   let orderId = document.getElementById("OrderId").innerHTML;
 
 
 
   // alert(orderId);
- //    let email =  sessionStorage.getItem("email");
-   let email =  "usamafaheem80@gmail.com";
+    let email =  sessionStorage.getItem("email")||"usamafaheem80@gmail.com";
+    let Owner_Fk =  sessionStorage.getItem("Login_id")||87262;
+    let Customer_Name = document.getElementById('Customer_Name').value;
+    let Customer_Phone = document.getElementById('Customer_Phone').value;
+    let Customer_Address = document.getElementById('Customer_Address').value;
+    
+    let tableExist = document.getElementById('tableExist');
+    let Customer_Info = document.getElementById('Customer_Info');
+    let tableNumber = document.getElementById('tableNumber').value;
+    
+    if (tableExist.checked) {
+      document.getElementById("Customer_Print_tableNum").innerHTML=tableNumber;
+    }
+  
+  if (Customer_Info.checked) {
+    if (!Customer_Name) {
+      alert('Please enter Valid Customer Name');
+      return false
+    }
+    if (!Customer_Phone) {
+      alert('Please enter Valid Customer Phone');
+      return false
+    }
+    if (!Customer_Address) {
+      alert('Please enter Valid Customer Address');
+      return false
+    }
+  }
+  
+  $("[data-toggle = modal]").trigger({ type: "click" });
+  
+  
+    let Customer_Souses = document.querySelectorAll('input[name="Customer_Souses"]:checked');
+    Customer_Souses = Array.from(Customer_Souses)
+    let checkedValues = Customer_Souses.map(checkbox => checkbox.value);
+    let Souses_Obj = {}
+    checkedValues.forEach(value => {
+      Souses_Obj[value] = value;
+    });
+
+  document.getElementById("Customer_Print_Name").innerHTML=Customer_Name;
+  document.getElementById("Customer_Print_Phone").innerHTML=Customer_Phone;
+  document.getElementById("Customer_Print_Address").innerHTML = Customer_Address;
+  document.getElementById("Customer_Print_Souses").innerHTML = Souses_Obj.Mayo? Souses_Obj.Mayo+(Souses_Obj.Ketchup?" & "+Souses_Obj.Ketchup:""):""
+  
+  //  let email =  "usamafaheem80@gmail.com";
 
   let salesDB = {
     buyArray: buyArray,
     OrderId: orderId,
     Email:email,
+    Owner_Fk: Owner_Fk,
+    Customer_Name: Customer_Name,
+    Customer_Phone: Customer_Phone,
+    Customer_Address: Customer_Address,
+    Customer_Souses: Souses_Obj,
+    tableNumber: tableNumber,
   }
+
+  // let salesDB = new FormData();
+  // formData.append("buyArray", buyArray);
+  // formData.append("OrderId", OrderId);
+  // formData.append("Email", Email);
+  // formData.append("Owner_Fk", Owner_Fk);
+  // formData.append("Customer_Name", Customer_Name);
+  // formData.append("Customer_Phone", Customer_Phone);
+  // formData.append("Customer_Address", Customer_Address);
+  // formData.append("Customer_Souses", Customer_Souses);
+  // formData.append("tableNumber", tableNumber);
+
+  console.log(salesDB);
 
   $.ajax({
     url: "../../PHP/SendSales.php",
     method:"POST",
     data: salesDB,
+    // contentType: false, // Set contentType to false when using FormData
+    // processData: false, // Set processData to false when using FormData
+    // enctype: 'multipart/form-data', // Set enctype to 'multipart/form-data' when using FormData
     success: function (res) {
       // alert("Ok saved \n"+res);
       console.log(res);
@@ -619,7 +814,7 @@ function Confirm(){
   });
 
 
-
+  Modal_Back();
 
   printDiv();
 
@@ -633,7 +828,7 @@ function printDiv() {
   const elementsToHide = document.querySelectorAll("body > :not(#Print)");
   elementsToHide.forEach((element) => {
     element.style.display = "none";
-    console.log(element);
+    // console.log(element);
   });
 
   // Print the desired div
@@ -673,3 +868,7 @@ function printDiv() {
 }
 
 
+let toComma = (x) => Math.ceil(x)
+        .toFixed(0)
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"/-Rs";

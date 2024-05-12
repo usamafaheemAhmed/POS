@@ -26,7 +26,8 @@ body{
     align-items: center;
     flex-wrap: wrap;
     justify-content: center;
-    flex: 1;
+    width: 100%;
+    /* flex: 1; */
     height: var(--height);
     /* backdrop-filter: blur(2px); */
     background-color: transparent;
@@ -110,3 +111,38 @@ body{
     color: red !important;
   
   }
+
+  .Box #sign-in{
+    margin-top: 0px !important;
+  }
+  .signup-image-link2{
+    display: none !important;
+  }
+
+
+  @media (max-width: 768px) {
+
+    .Box #sign-in{
+      width: 90% !important;
+      margin-top: -90% !important;
+      margin-left: 4% !important;
+      
+      /* background-color: #326789 !important; */
+    }
+    .signup-image{
+      display: none !important;
+    }
+    .signin-image{
+      display: none !important;
+    }
+    .social-login{
+      display: none !important;
+    }
+    .signup-image-link2{
+      display: inline-block !important;
+      color: black !important;
+      text-align: center !important;
+      /* border: 0.5px solid #326789; */
+      width: 100% !important;
+    }
+}

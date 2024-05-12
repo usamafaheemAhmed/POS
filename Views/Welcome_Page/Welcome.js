@@ -57,21 +57,21 @@ function LoginData(){
         success: function (res) {
             console.log(res);
             let values = JSON.parse(res);
-            if(values== 3){
+            if(values.status== 3){
                 // alert(values); Password is Invalid
                 document.getElementById("your_pass").classList.add("error");
                 document.getElementById("your_pass_icon").classList.add("error");
                 document.getElementById("your_email").classList.remove("error");
                 document.getElementById("your_email_icon").classList.remove("error");
             }
-           else if(values== 2){
+           else if(values.status== 2){
                 // alert(values); Email not found
                 document.getElementById("your_email").classList.add("error");
                 document.getElementById("your_email_icon").classList.add("error");
                 document.getElementById("your_pass").classList.remove("error");
                 document.getElementById("your_pass_icon").classList.remove("error");
             }
-            else if(values== 1){
+            else if(values.status== 1){
                 // alert(values); Success Fully logged in 
                 document.getElementById("your_email").classList.remove("error");
                 document.getElementById("your_email_icon").classList.remove("error");
@@ -79,6 +79,7 @@ function LoginData(){
                 document.getElementById("your_pass_icon").classList.remove("error");
 
                 sessionStorage.setItem("email", your_email);
+                sessionStorage.setItem("Login_id", values.id);
                 location.replace("../Landing_Page/index.html");
 
 

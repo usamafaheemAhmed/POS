@@ -14,12 +14,14 @@ let ListOfSales ;
 window.onload = () => {
     
 
-  //    let email =  sessionStorage.getItem("email");
-     let email =  "usamafaheem80@gmail.com";
+  let email =  sessionStorage.getItem("email")||"usamafaheem80@gmail.com";
+  let Owner_Fk =  sessionStorage.getItem("Login_id")||"87262";
+    //  let email =  "usamafaheem80@gmail.com";
   
       // alert(email);
       let data = {
-          email: email,
+        email: email,
+        Owner_Fk: Owner_Fk
       }
   
       $.ajax({
@@ -49,11 +51,11 @@ function display_Sales() {
 
 const salesTableBody = document.getElementById('salesTableBody');
 
-ListOfSales.forEach(sale => {
+ListOfSales.forEach((sale, index) => {
   const row = document.createElement('tr');
 
   const salesIdCell = document.createElement('td');
-  salesIdCell.textContent = sale.Sales_ID;
+  salesIdCell.textContent = index+1;
   row.appendChild(salesIdCell);
 
   const orderIdCell = document.createElement('td');
@@ -64,6 +66,29 @@ ListOfSales.forEach(sale => {
   itemNameCell.textContent = sale.itemName;
   itemNameCell.classList.add("NameTag")
   row.appendChild(itemNameCell);
+
+  
+  // const itemSousesCell = document.createElement('td');
+  // const itemSouseslist = document.createElement('ul');
+  
+  // // Assuming sale.Souses is an object
+  // let obj = JSON.parse(sale.Souses);;
+  
+  // // Loop through each attribute in the object
+  // for (let key in obj) {
+  //     if (obj.hasOwnProperty(key)) { // Ensure it's an own property
+  //         const item = document.createElement('li');
+  //         item.textContent = `${obj[key]}`;
+  //         itemSouseslist.appendChild(item);
+  //     }
+  // }
+  
+  // itemSousesCell.appendChild(itemSouseslist);
+  // itemSousesCell.classList.add("SousesTag");
+  
+  // // Append the td to your row (assuming row is already defined)
+  // row.appendChild(itemSousesCell);
+  
 
   const itemCodeCell = document.createElement('td');
   itemCodeCell.textContent = sale.ItemCode;
@@ -87,7 +112,7 @@ ListOfSales.forEach(sale => {
   row.appendChild(timeCell);
 
   const itemPriceCell = document.createElement('td');
-  itemPriceCell.textContent = sale.ItemPrice;
+  itemPriceCell.textContent = toComma(sale.ItemPrice);
   itemPriceCell.classList.add("priceTag");
   row.appendChild(itemPriceCell);
 
@@ -105,7 +130,7 @@ const totalText = document.createElement('td');
   row.appendChild(totalText);
 
   const salesIdCell = document.createElement('td');
-  salesIdCell.textContent = totalPriceOfDay;
+  salesIdCell.textContent = toComma(totalPriceOfDay);
   row.appendChild(salesIdCell);
   salesIdCell.id="totalResults";  
   salesTableBody.appendChild(row);
@@ -297,3 +322,9 @@ function DeleteOrder() {
     });
 
 }
+
+let toComma = (x) =>
+    Math.ceil(x)
+        .toFixed(0)
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"-/Rs";

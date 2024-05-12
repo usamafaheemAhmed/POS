@@ -3,6 +3,8 @@ include("./connect.php");
 
 $Code = $_POST["OriginalCode"];
 
+echo $Code;
+
 $sql = "UPDATE `menu` SET `isDeleted` = 1 WHERE `ItemCode` = '{$Code}'";
 
 if ($conn->query($sql) === TRUE) {

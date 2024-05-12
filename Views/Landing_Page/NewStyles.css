@@ -18,6 +18,15 @@ overflow-x: hidden;
   border: 2px solid #78A6C8;
   color:#E65C4F;
 }
+.Modal_Input{
+  border-left: 2px solid #78A6C8 !important;
+  border-right: 2px solid #78A6C8 !important;
+  text-align: left !important;
+  color: #326789 !important;
+}
+.Modal_Input::placeholder{
+  text-align: left !important;
+}
 .form-control{
   width: 1%;
   border-top: 2px solid #78A6C8;
@@ -332,7 +341,7 @@ overflow-x: hidden;
 .itemCards{
 
   width: 200px !important;
-  height: 200px !important;
+  /* height: 200px !important; */
   box-shadow: 8px 8px 24px -14px rgba(0,0,0,0.22);
   -webkit-box-shadow: 8px 8px 24px -14px rgba(0,0,0,0.22);
   -moz-box-shadow: 8px 8px 24px -14px rgba(0,0,0,0.22);
@@ -427,9 +436,9 @@ overflow-x: hidden;
     /* margin: 0px 0px 0px 500px; */
     text-align: center;
   }    
-  .Print2 h5:last-child{
+  /* .Print2 h5:last-child{
     float: right;
-  }
+  } */
 
   .save{
     border: 2px solid #E65C4F;
@@ -443,7 +452,19 @@ overflow-x: hidden;
     z-index: 1;
   }
 
+  .shortCuts{
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 0.5rem;
+    column-gap: 0.5rem;
+    /* background-color: bisque; */
+  }
+
+
   .shortCuts span{
+    flex-grow: 1;
+    flex-shrink: 0;
+
     border: 1px solid #E65C4F;
 
     box-shadow: 10px 5px 32px -12px rgba(0,0,0,0.9);
@@ -582,9 +603,63 @@ overflow-x: hidden;
 
 }
 
+.Slide{
+  width: 35%;
+  height: 5vh;
+  background-color: #d3d6d9;
+  border-radius: 25px;
+  box-shadow: inset 2px 2px 2px #00000061;
+  position: relative;
+}
+
+.Slide::after{
+  
+  position: absolute;
+  top: 3px;
+  left: 5px;
+  content: "";
+  background-color: #326789;
+  /* box-shadow:  2px 2px 2px #00000061; */
+  border-radius: 50px;
+  width: 25px;
+  height: 4vh;
+
+  transition: 0.2s left ease-in;
+}
+
+#tableExist:checked+.Slide::after{
+  left: 40px;
+}
+#Customer_Info:checked+.Slide::after{
+  left: 40px;
+}
+
+.SearchDropDown:hover{
+background-color: #E65C4F;
+color: #E9EEF2;
+}
+.SearchDropDown{
+/* background-color: #E65C4F; */
+color: #326789;
+font-size: 18px;
+font-family: 'Source Sans Pro', sans-serif;
+font-weight: 600;
+}
 
 
 
+@media screen and (max-width: 767px){
+  .Slide::after{
+    top: 4px;
+    width: 38px;
+  }
+  #tableExist:checked+.Slide::after{
+    left: 80px;
+  }
+  #Customer_Info:checked+.Slide::after{
+    left: 80px;
+  }
+}
 
 
 

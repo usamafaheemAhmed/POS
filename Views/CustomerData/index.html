@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="../bootstrap-4.6.2-dist/fontawesome-free-6.4.0-web/css/all.css">
     
     <link rel="stylesheet" href="./style.css">
-    <title>Daily Sale Page</title>
+    <title>POS Customer Data</title>
   </head>
   <body>
     <div id="mySidenav" class="sidenav">
@@ -55,56 +55,19 @@
         </div>
         <div class="row" style="margin-top: 85px;">
             <div class="container">
-                <button id="exportButton" class="btn excel float-right" onclick="exportToExcel()">Export to Excel</button>
-
-                <button type="button" class="btn float-left excel" data-toggle="modal" data-target="#modelId">
-                  Delete Order
-                </button>
-
                 <div class="table-responsive ">
                     <table class="table table-hover  mt-2">
                         <thead class="thead-blue">
                           <tr>
-                            <th scope="col">Sales_ID</th>
-                            <th scope="col">OrderID</th>
-                            <th scope="col">
-                        
-                              <div class="dropdown open">
-                                <span class=" dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                    Item Name
-                                    </span>
-                                <div class="dropdown-menu" aria-labelledby="triggerId">
-                                  <span class="dropdown-item" onclick="showAllRows()" >All</span>
-                                  <span class="dropdown-item" ><input type="text" name="itemName" id="ItemName" class="form-control date" onblur="searchByName(this.value)" ></span>
-                                </div>
-                              </div>
-
-                            </th>
+                            <th scope="col">No#</th>
+                            <th scope="col">Name <i class="fa-solid fa-caret-down"></i></th>
+                            <th scope="col">Phone <i class="fa-solid fa-caret-down"></i></th>
                             <!-- <th scope="col">Item Souses</th> -->
-                            <th scope="col">Item Code</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Item Price</th>
+                            <th scope="col">Address <i class="fa-solid fa-caret-down"></i></th>
                             <!-- <th scope="col">Date <input type="date" name="date" id="date" class="form-control date" onblur="searchByDate(this.value)" > </th> -->
-                            <th scope="col">
-
-                              <div class="dropdown open">
-                                <span class=" dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                    Date
-                                    </span>
-                                <div class="dropdown-menu" aria-labelledby="triggerId">
-                                  <span class="dropdown-item" onclick="showAllRows()" >All</span>
-                                  <span class="dropdown-item" ><input type="date" name="date" id="date" class="form-control date" onblur="searchByDate(this.value)" ></span>
-                                </div>
-                              </div>
-
-                            </th>
-                            <th scope="col">Time</th>
-                            <th scope="col">Item Price</th>
                           </tr>
                         </thead>
-                        <tbody id="salesTableBody">
+                        <tbody id="CustomerTableBody">
                          
                         </tbody>
                       </table>
@@ -114,33 +77,6 @@
       </div>
 
 
-
-      <!-- Button trigger modal -->
-
-      
-      <!-- Modal -->
-      <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title">Delete Order</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            <div class="modal-body">
-              <div class="container-fluid">
-                <label for="OrderId">Enter Order Id :</label>
-                <input type="text" name="OrderId" id="OrderId" class="form-control excelDelete">
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn excel" onclick="DeleteOrder()">Delete</button>
-            </div>
-          </div>
-        </div>
-      </div>
 
 
 

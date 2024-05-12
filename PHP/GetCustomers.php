@@ -1,7 +1,7 @@
 <?php
 include("./connect.php");
 
-$sql = "SELECT * FROM `sales` WHERE `Email` = '{$_GET['email']}' AND `Owner_Fk` = '{$_GET['Owner_Fk']}'";
+$sql = "SELECT * FROM `customer` WHERE `Owner_Fk` = '{$_GET['Owner_Fk']}'";
 $result = mysqli_query($conn, $sql);
 
 $sales_item = array();
@@ -14,6 +14,6 @@ if (count($sales_item) > 0) {
     $data = json_encode($sales_item);
     echo $data;
 } else {
-    echo "2 Not Found any sales";
+    echo "Not Found any Customer";
 }
 ?>

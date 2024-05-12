@@ -1,7 +1,10 @@
 <?php
 include("./connect.php");
 
-$sql = "SELECT * FROM `menu` WHERE `Email` = '{$_GET['email']}'";
+
+// echo $_GET['Owner_Fk'];
+
+$sql = "SELECT * FROM `menu` WHERE `Email` = '{$_GET['email']}' AND `Owner_Fk` = '{$_GET['Owner_Fk']}'";
 $result = mysqli_query($conn, $sql);
 
 $menu_items = array();

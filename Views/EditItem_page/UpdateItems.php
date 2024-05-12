@@ -1,72 +1,72 @@
 <?php
-// include("./connect.php");
-
-// $Name = $_POST["name"];
-// $Price = $_POST["Price"];
-// $Code = $_POST["Code"];
-// $OriginalCode = $_POST["OriginalCode"];
-
-
-// // $sql = "INSERT INTO `logins` (`LoginID`, `Name`, `Email`, `password`, `Agreed`) VALUES ('', '{$name}', '{$email}', '{$password}', '{$agreeTerm}')"; 
-
-
-// $sql = "UPDATE `menu` SET `ItemCode` = '{$Code}', `itemName` = '{$Name}', `ItemPrice` = '{$Price}' WHERE `ItemCode` = '{$OriginalCode}'";
-
-// if ($conn->query($sql) === TRUE) {
-//   echo "Successfully updated";
-// } else {
-//   echo "Failed to update: " . $conn->error;
-// }
-
-// // UPDATE `menu` SET `ItemPrice` = '250' WHERE `menu`.`id` = 1;
-
-
-
 
 include("../../PHP/connect.php");
 
-$Name = $_POST["name"];
-$Price = $_POST["Price"];
-$Code = $_POST["Code"];
+$Name = $_POST["itemName"];
+$Price = $_POST["itemPrice"];
+$Code = $_POST["itemCode"];
+$Category = $_POST["itemCategory"];
 $OriginalCode = $_POST["OriginalCode"];
 
-$uploadedFile = $_FILES["image"];
+
+
+// echo"<pre>";
+// print_r($_POST);
+// echo"</pre>";
+
+
+
+
+// die;
 
 // Check if a file was uploaded
-if (!empty($uploadedFile) && $uploadedFile["error"] === UPLOAD_ERR_OK) {
-  $tempFilePath = $uploadedFile["tmp_name"];
-  $fileName = $uploadedFile["name"];
-  $targetDirectory = "../Item_Images/";
-  $targetFilePath = $targetDirectory . $fileName;
+if (isset($_FILES["image"])) {
+    
+    $uploadedFile = $_FILES["image"];
 
-  // Move the uploaded file to the target directory
-  if (move_uploaded_file($tempFilePath, $targetFilePath)) {
-    // File uploaded successfully, proceed with the database update
-    $sql = "UPDATE `menu` SET `ItemCode` = '{$Code}', `itemName` = '{$Name}', `ItemPrice` = '{$Price}', `ImgUrl` = '{$targetFilePath}' WHERE `ItemCode` = '{$OriginalCode}'";
+    // echo"<pre>";
+    // print_r($uploadedFile);
+    // echo"</pre>";
 
-    if ($conn->query($sql) === TRUE) {
-      echo "Successfully updated and image uploaded";
+    $tempFilePath = $uploadedFile["tmp_name"];
+    $fileName = basename($uploadedFile["name"]);
+    $targetDirectory = "../Item_Images/";
+    $targetFilePath = $targetDirectory . $fileName;
+
+    // Move the uploaded file to the target directory
+    if (move_uploaded_file($tempFilePath, $targetFilePath)) {
+        // File uploaded successfully, proceed with the database update using prepared statement
+        $sql = "UPDATE `menu` SET `ItemCode` = ?, `itemName` = ?, `ItemPrice` = ?, `category` = ?, `ImgUrl` = ? WHERE `ItemCode` = ?";
+        // echo "Code: $Code, Name: $Name, Price: $Price, Category: $Category, TargetFilePath: $targetFilePath, OriginalCode: $OriginalCode \n";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssisss", $Code, $Name, $Price, $Category, $targetFilePath, $OriginalCode);
+
+        if ($stmt->execute()) {
+            echo "Successfully updated and image uploaded";
+        } else {
+            echo "Failed to update and upload image: " . $stmt->error;
+        }
+
+        $stmt->close();
     } else {
-      echo "Failed to update and upload image: " . $conn->error;
+        echo "Failed to upload image";
     }
-  } else {
-    echo "Failed to upload image";
-  }
 } else {
-  // No file uploaded or error occurred, proceed with the database update without the image
-  $sql = "UPDATE `menu` SET `ItemCode` = '{$Name}', `itemName` = '{$Price}', `ItemPrice` = '{$Code}' WHERE `ItemCode` = '{$OriginalCode}'";
+    // No file uploaded or error occurred, proceed with the database update without the image
+    $sql = "UPDATE `menu` SET `ItemCode` = ?, `itemName` = ?, `ItemPrice` = ?, `category` = ? WHERE `ItemCode` = ?";
+    
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssiss", $Code, $Name, $Price, $Category, $OriginalCode);
 
-  if ($conn->query($sql) === TRUE) {
-    echo "Successfully updated";
-  } else {
-    echo "Failed to update: " . $conn->error;
-  }
+    if ($stmt->execute()) {
+        echo "Successfully updated";
+    } else {
+        echo "Failed to update: " . $stmt->error;
+    }
+
+    $stmt->close();
 }
 
 $conn->close();
-
-
-
-
-
 ?>
